@@ -13,14 +13,15 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: MM
+title: My Home Lab Journey
 email:
-description: >- # this means to ignore newlines until "baseurl:"
+description: >-Documenting my cybersecurity lab builds, tools, and learning. # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
 twitter_username: username
-github_username: username
+github_username: sahara7191
+repository: "sahara7191/home-lab-blog"
 minimal_mistakes_skin: default
 search: true
 
@@ -32,6 +33,9 @@ permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+
+url: "https://sahara7191.github.io"
+baseurl: "/home-lab-blog"
 
 include:
   - _pages
@@ -58,8 +62,8 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "First Lastname"
-  avatar : "/assets/images/bio-photo.jpg"
+  name   : "Sahara"
+  avatar : "/assets/images/sahara_image.jpg"
   bio    : "My awesome biography constrained to a sentence or two goes here."
   links:
     - label: "Website"
