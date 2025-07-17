@@ -1,10 +1,8 @@
 ---
 layout: single
-title: "About My Home Lab Project"
+title: "About My Project"
 permalink: /about/
 ---
-
-## About This Blog
 
 This blog documents my cybersecurity home lab — a space where I experiment with detection engineering, threat hunting, and digital forensics. It’s part technical journal, part portfolio.
 
