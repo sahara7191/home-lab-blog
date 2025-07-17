@@ -4,28 +4,32 @@
 @import "minimal-mistakes/skins/plum";
 @import "minimal-mistakes";
 
-/* Custom dark mode overrides */
+/* Manual dark mode overrides using real CSS, not SCSS vars */
 body.dark-mode {
-  --background-color: #1c1122;
-  --text-color: #f1eaf6;
-  --muted-text-color: #c6b4d6;
-  --primary-color: #b57edc;
-  --border-color: #32243e;
-  --footer-background-color: #24142d;
-  --link-color: #e1baff;
-  --link-color-hover: #f3d5ff;
-  --code-background-color: #2d1e37;
-}
-
-body.dark-mode {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  background-color: #1c1122 !important;
+  color: #f1eaf6 !important;
 }
 
 body.dark-mode a {
-  color: var(--link-color);
+  color: #e1baff !important;
 }
 
 body.dark-mode .site-footer {
-  background-color: var(--footer-background-color);
+  background-color: #24142d !important;
+}
+
+body.dark-mode .masthead,
+body.dark-mode .page__footer,
+body.dark-mode .nav__toggle,
+body.dark-mode .page__content,
+body.dark-mode .page__hero {
+  background-color: #1c1122 !important;
+  color: #f1eaf6 !important;
+}
+
+body.dark-mode .highlighter-rouge,
+body.dark-mode code,
+body.dark-mode pre {
+  background-color: #2d1e37 !important;
+  color: #fcefff !important;
 }
