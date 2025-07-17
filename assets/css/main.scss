@@ -98,3 +98,13 @@ body {
 body.dark-mode #theme-icon {
   transform: rotate(180deg);
 }
+
+/* Fix footer background in dark mode */
+body.dark-mode .footer-wrapper,
+body.dark-mode .page__footer,
+body.dark-mode .site-footer {
+  background: none !important;
+  background-color: #1c1122 !important;
+  color: #f1eaf6 !important;
+  border-top: 1px solid #32243e !important;
+}
