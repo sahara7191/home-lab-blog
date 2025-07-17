@@ -63,7 +63,7 @@ plugins:
 author:
   name   : "Sahara"
   avatar : "/assets/images/sahara_image.jpg"
-  bio    : "Purple team with claws. Simulating threats, detecting anomalies, and decoding logs."
+  bio    : "*Purple team with claws. Simulating threats, detecting anomalies, and decoding logs.*"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"
