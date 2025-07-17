@@ -33,3 +33,8 @@ body.dark-mode pre {
   background-color: #2d1e37 !important;
   color: #fcefff !important;
 }
+
+body.dark-mode .masthead {
+  background-color: #1c1122 !important;  // Same as the page background
+  border-bottom: 1px solid #32243e;
+}
