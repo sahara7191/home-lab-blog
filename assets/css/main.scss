@@ -126,3 +126,11 @@ body.dark-mode .social-icons svg path {
   fill: #f1eaf6 !important; /* or any other light tone */
 }
 
+/* Force visible GitHub icon in dark mode */
+body.dark-mode .social-icons .fa-github,
+body.dark-mode .social-icons .fab.fa-github,
+body.dark-mode .social-icons svg,
+body.dark-mode .social-icons svg path {
+  fill: #f1eaf6 !important;
+  color: #f1eaf6 !important;
+}
