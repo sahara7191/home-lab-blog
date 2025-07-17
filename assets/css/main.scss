@@ -1,5 +1,31 @@
 ---
 ---
 
-@import "minimal-mistakes/skins/plum"; // custom skin first
-@import "minimal-mistakes";            // theme base
+@import "minimal-mistakes/skins/plum";
+@import "minimal-mistakes";
+
+/* Custom dark mode overrides */
+body.dark-mode {
+  --background-color: #1c1122;
+  --text-color: #f1eaf6;
+  --muted-text-color: #c6b4d6;
+  --primary-color: #b57edc;
+  --border-color: #32243e;
+  --footer-background-color: #24142d;
+  --link-color: #e1baff;
+  --link-color-hover: #f3d5ff;
+  --code-background-color: #2d1e37;
+}
+
+body.dark-mode {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+body.dark-mode a {
+  color: var(--link-color);
+}
+
+body.dark-mode .site-footer {
+  background-color: var(--footer-background-color);
+}
