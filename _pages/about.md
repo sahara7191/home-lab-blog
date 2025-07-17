@@ -4,7 +4,7 @@ title: "About My Project"
 permalink: /about/
 ---
 
-## 
+---
 
 This blog documents my cybersecurity home lab, a space where I experiment with detection engineering, threat hunting, and digital forensics. 
 
