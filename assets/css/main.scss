@@ -151,3 +151,18 @@ body.dark-mode #theme-icon {
   margin-top: 3rem;
   padding-top: 1rem;
 }
+
+// Fix for pushing footer to bottom on tall pages
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1;
+}
+
+.site-footer {
+  margin-top: 2rem;
+}
