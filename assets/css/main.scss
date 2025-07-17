@@ -18,31 +18,32 @@ body.dark-mode .site-footer {
   background-color: #24142d !important;
 }
 
+/* Header, nav, masthead cleanup */
 body.dark-mode .masthead,
+body.dark-mode .masthead__inner-wrap,
+body.dark-mode .page__hero,
 body.dark-mode .page__footer,
-body.dark-mode .nav__toggle,
 body.dark-mode .page__content,
-body.dark-mode .page__hero {
-  background-color: #1c1122 !important;
+body.dark-mode .nav,
+body.dark-mode .nav__toggle {
+  background: #1c1122 !important;
+  background-image: none !important;
   color: #f1eaf6 !important;
+  border-color: #32243e !important;
 }
 
+body.dark-mode .masthead__menu-item {
+  color: #cfaaff !important;
+}
+
+body.dark-mode .site-title {
+  color: #e4c3ff !important;
+}
+
+/* Code blocks */
 body.dark-mode .highlighter-rouge,
 body.dark-mode code,
 body.dark-mode pre {
   background-color: #2d1e37 !important;
   color: #fcefff !important;
-}
-
-body.dark-mode .masthead {
-  background-color: #1c1122 !important;  // Same as the page background
-  border-bottom: 1px solid #32243e;
-}
-
-body.dark-mode .masthead__menu-item {
-  color: #cfaaff !important; // softer purple for nav links
-}
-
-body.dark-mode .site-title {
-  color: #e4c3ff !important; // bright plum for title
 }
