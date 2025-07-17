@@ -65,9 +65,9 @@ author:
   avatar : "/assets/images/sahara_image.jpg"
   bio    : "*Purple team with claws. Simulating threats, detecting anomalies, and decoding logs.*"
   links:
-    - label: "LinkedIn"
-      icon: "fas fa-fw fa-linkedin"
-      url: "https://linkedin.com"
+  #  - label: "LinkedIn"
+  #    icon: "fas fa-fw fa-linkedin"
+  #    url: "https://linkedin.com"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
       url: "https://github.com/"
