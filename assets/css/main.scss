@@ -109,9 +109,11 @@ body.dark-mode .dark-mode-toggle,
 
 #theme-icon {
   display: inline-block;
-  transition: transform 0.3s ease;
+  opacity: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 body.dark-mode #theme-icon {
-  transform: rotate(180deg);
+  transform: scale(1.1);
+  opacity: 1;
 }
