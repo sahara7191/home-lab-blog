@@ -38,3 +38,11 @@ body.dark-mode .masthead {
   background-color: #1c1122 !important;  // Same as the page background
   border-bottom: 1px solid #32243e;
 }
+
+body.dark-mode .masthead__menu-item {
+  color: #cfaaff !important; // softer purple for nav links
+}
+
+body.dark-mode .site-title {
+  color: #e4c3ff !important; // bright plum for title
+}
