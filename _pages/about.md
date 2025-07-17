@@ -18,7 +18,7 @@ This blog also serves as a living reference for the configurations, decisions, a
 
 ## Who I Am
 
-I'm currently pursuing a Master’s in Digital Forensics and Cyber Investigation, and hold a background in cybersecurity fundamentals, pentesting, and lab development.
+I'm a cybersecurity enthusiast and graduate student pursuing an M.S. in Digital Forensics and Cyber Investigation. This blog is my space to document hands-on experience in threat hunting, pentesting, digital forensics, and security operations using a custom-built home lab.
 
 My technical interests include:
 
