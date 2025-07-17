@@ -104,3 +104,13 @@ category_archive:
 tag_archive:
   type: liquid
   path: /tags/
+
+sass:
+  style: compressed
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      css: "main"
