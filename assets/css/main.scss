@@ -109,11 +109,14 @@ body.dark-mode .site-footer {
   border-top: 1px solid #32243e !important;
 }
 
-/* Fix GitHub icon color in dark mode */
-body.dark-mode .site-footer svg,
-body.dark-mode .site-footer .icon,
+/* Force GitHub icon visibility in dark mode footer */
+body.dark-mode .site-footer .icon svg,
 body.dark-mode .site-footer .fa,
-body.dark-mode .site-footer .fab {
-  color: #f1eaf6 !important; /* light text color */
-  fill: #f1eaf6 !important;  /* ensures SVGs render */
+body.dark-mode .site-footer .fab,
+body.dark-mode .site-footer .icon > svg {
+  color: #f1eaf6 !important;
+  fill: #f1eaf6 !important;
+  stroke: none !important;
+  opacity: 1 !important;
 }
+
