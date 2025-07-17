@@ -11,3 +11,17 @@ $footer-background-color: #ebdef8;
 $link-color: #7e4eb2;
 $link-color-hover: darken($link-color, 10%);
 $code-background-color: #f0e9f9;
+
+// Dark Plum Theme
+@media (prefers-color-scheme: dark) {
+  $background-color: #1c1122;
+  $background-color-dark: #1a0f1e;
+  $text-color: #f1eaf6;
+  $muted-text-color: #c6b4d6;
+  $primary-color: #b57edc;
+  $border-color: #32243e;
+  $footer-background-color: #24142d;
+  $link-color: #e1baff;
+  $link-color-hover: lighten($link-color, 10%);
+  $code-background-color: #2d1e37;
+}
