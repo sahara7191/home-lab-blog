@@ -84,3 +84,34 @@ body.dark-mode .dark-mode-toggle,
   z-index: 999;
   box-shadow: 0 0 8px #7d4fa4aa;
 }
+
+/* Toggle button styling */
+body.dark-mode .dark-mode-toggle,
+.dark-mode-toggle {
+  background-color: #7d4fa4 !important;
+  color: #fff !important;
+  border: none;
+  padding: 0.3rem 0.8rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  box-shadow: 0 0 8px #7d4fa4aa;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.dark-mode-toggle:hover {
+  transform: scale(1.05);
+}
+
+#theme-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+body.dark-mode #theme-icon {
+  transform: rotate(180deg);
+}
