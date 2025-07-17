@@ -5,7 +5,7 @@
 @import "minimal-mistakes";
 
 /* -----------------------------------------------------
-   Dark Mode Manual Overrides (toggleable via JS toggle)
+   Dark Mode Manual Overrides
 -------------------------------------------------------- */
 
 body.dark-mode {
@@ -18,7 +18,7 @@ body.dark-mode a {
   color: #e1baff !important;
 }
 
-/* Navigation & Header */
+/* Header and Navigation */
 body.dark-mode .masthead,
 body.dark-mode .masthead__inner-wrap,
 body.dark-mode .page__hero,
@@ -49,55 +49,38 @@ body.dark-mode pre {
   color: #fcefff !important;
 }
 
-/* Footer (text container) */
+/* Footer */
 body.dark-mode .site-footer {
   background-color: #24142d !important;
   color: #f1eaf6 !important;
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
 }
 
-/* Footer (outer wrapper) */
 body.dark-mode .page__footer,
 body.dark-mode .footer-wrapper {
   background-color: #1c1122 !important;
   color: #f1eaf6 !important;
   border-top: 1px solid #32243e !important;
+  padding-top: 2rem !important; /* Adds space above the footer line */
 }
 
-/* Optional: Dark mode toggle button styling */
-body.dark-mode .dark-mode-toggle {
+/* -----------------------------------------------------
+   Dark Mode Toggle Button (bottom-right, compact)
+-------------------------------------------------------- */
+
+body.dark-mode .dark-mode-toggle,
+.dark-mode-toggle {
   background-color: #7d4fa4 !important;
   color: #fff !important;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  margin: 1rem auto;
-  display: block;
-}
-
-/* ---------------------------------------------
-   Footer Styling Fixes (Dark Mode + Button)
----------------------------------------------- */
-
-/* Reduce excess space in footer */
-.page__footer {
-  padding-top: 0.75rem !important;
-  padding-bottom: 0.75rem !important;
-}
-
-/* Shrink and align Dark Mode button */
-.dark-mode-toggle {
-  font-size: 0.85rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 4px;
-  float: right;
-  margin: 0.25rem 0.5rem;
-  background-color: #7d4fa4;
-  color: #fff;
-  border: none;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 5px;
   cursor: pointer;
-}
-
-/* Optional: better alignment in dark mode */
-body.dark-mode .dark-mode-toggle {
-  background-color: #9159c7;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  box-shadow: 0 0 8px #7d4fa4aa;
 }
