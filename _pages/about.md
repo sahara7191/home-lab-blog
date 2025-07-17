@@ -4,6 +4,7 @@ title: "About My Project"
 permalink: /about/
 ---
 
+
 This blog documents my cybersecurity home lab, a space where I experiment with detection engineering, threat hunting, and digital forensics. 
 
 Everything I publish here is based on hands-on experience: configuring tools like Wazuh, pfSense, and Velociraptor; simulating real-world attacks in Active Directory environments; and applying frameworks like MITRE ATT&CK in lab-scale scenarios.
