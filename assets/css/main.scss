@@ -11,6 +11,7 @@ body.dark-mode {
 }
 
 body.dark-mode .footer-wrapper {
+  background: none !important; /* neutralize any background shorthand */
   background-color: #1c1122 !important;
   color: #f1eaf6 !important;
   border-top: 1px solid #32243e !important;
