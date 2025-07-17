@@ -73,3 +73,31 @@ body.dark-mode .dark-mode-toggle {
   margin: 1rem auto;
   display: block;
 }
+
+/* ---------------------------------------------
+   Footer Styling Fixes (Dark Mode + Button)
+---------------------------------------------- */
+
+/* Reduce excess space in footer */
+.page__footer {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+
+/* Shrink and align Dark Mode button */
+.dark-mode-toggle {
+  font-size: 0.85rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  float: right;
+  margin: 0.25rem 0.5rem;
+  background-color: #7d4fa4;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* Optional: better alignment in dark mode */
+body.dark-mode .dark-mode-toggle {
+  background-color: #9159c7;
+}
