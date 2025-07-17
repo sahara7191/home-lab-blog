@@ -122,16 +122,6 @@ body.dark-mode #theme-icon {
    Ensure footer sits at the bottom naturally
 -------------------------------------------- */
 
-.initial-content {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.page {
-  flex: 1;
-}
-
 .page__footer {
   margin-top: 4rem; /* increase space above the horizontal line */
 }
