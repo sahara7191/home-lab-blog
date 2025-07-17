@@ -4,20 +4,21 @@
 @import "minimal-mistakes/skins/plum";
 @import "minimal-mistakes";
 
-/* Manual dark mode overrides using real CSS, not SCSS vars */
+/* -----------------------------------------------------
+   Dark Mode Manual Overrides (toggleable via JS toggle)
+-------------------------------------------------------- */
+
 body.dark-mode {
   background-color: #1c1122 !important;
   color: #f1eaf6 !important;
 }
 
+/* Links */
 body.dark-mode a {
   color: #e1baff !important;
 }
 
-body.dark-mode .site-footer {
-  background-color: #24142d !important;
-}
-
+/* Navigation & Header */
 body.dark-mode .masthead,
 body.dark-mode .masthead__inner-wrap,
 body.dark-mode .page__hero,
@@ -38,4 +39,37 @@ body.dark-mode .masthead__menu-item a {
 
 body.dark-mode .site-title a {
   color: #e4c3ff !important;
+}
+
+/* Code Blocks & Highlights */
+body.dark-mode .highlighter-rouge,
+body.dark-mode code,
+body.dark-mode pre {
+  background-color: #2d1e37 !important;
+  color: #fcefff !important;
+}
+
+/* Footer (text container) */
+body.dark-mode .site-footer {
+  background-color: #24142d !important;
+  color: #f1eaf6 !important;
+}
+
+/* Footer (outer wrapper) */
+body.dark-mode .page__footer,
+body.dark-mode .footer-wrapper {
+  background-color: #1c1122 !important;
+  color: #f1eaf6 !important;
+  border-top: 1px solid #32243e !important;
+}
+
+/* Optional: Dark mode toggle button styling */
+body.dark-mode .dark-mode-toggle {
+  background-color: #7d4fa4 !important;
+  color: #fff !important;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  margin: 1rem auto;
+  display: block;
 }
