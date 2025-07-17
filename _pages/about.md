@@ -4,12 +4,15 @@ title: "About My Project"
 permalink: /about/
 ---
 
+## 
 
 This blog documents my cybersecurity home lab, a space where I experiment with detection engineering, threat hunting, and digital forensics. 
 
 Everything I publish here is based on hands-on experience: configuring tools like Wazuh, pfSense, and Velociraptor; simulating real-world attacks in Active Directory environments; and applying frameworks like MITRE ATT&CK in lab-scale scenarios.
 
 Whether I’m tuning alert rules, analyzing event logs, or breaking something on purpose to figure out how it works, I treat this space as a way to stay sharp, build repeatable processes, and showcase practical skills.
+
+This blog also serves as a living reference for the configurations, decisions, and issues I’ve worked through.
 
 ---
 
@@ -28,15 +31,6 @@ I’ve built this lab to closely mimic enterprise conditions — including multi
 
 ---
 
-## Why I Built This
-
-- To **document and reflect** on hands-on technical growth  
-- To **demonstrate capability** in real-world tool usage during interviews  
-- To **contribute back** to the community through shareable configs, walkthroughs, and fixes
-
-This blog also serves as a living reference for the configurations, decisions, and issues I’ve worked through.
-
----
 
 📫 You can explore my work throughout the blog or connect with me via [GitHub](https://github.com/sahara7191).
 
