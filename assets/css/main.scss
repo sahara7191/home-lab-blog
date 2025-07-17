@@ -134,3 +134,20 @@ body.dark-mode #theme-icon {
   margin-top: 4rem;   // Adjust as needed
   padding-top: 2rem;  // Optional, gives padding inside the footer
 }
+
+// Stretch layout to full height and push footer down
+.layout--page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__content {
+  flex: 1 0 auto;
+}
+
+.site-footer {
+  flex-shrink: 0;
+  margin-top: 3rem;
+  padding-top: 1rem;
+}
