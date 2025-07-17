@@ -120,3 +120,9 @@ body.dark-mode .site-footer .icon > svg {
   opacity: 1 !important;
 }
 
+/* Fix social icons color in dark mode */
+body.dark-mode .social-icons svg,
+body.dark-mode .social-icons svg path {
+  fill: #f1eaf6 !important; /* or any other light tone */
+}
+
