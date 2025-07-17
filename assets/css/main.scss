@@ -108,3 +108,12 @@ body.dark-mode .site-footer {
   color: #f1eaf6 !important;
   border-top: 1px solid #32243e !important;
 }
+
+/* Fix GitHub icon color in dark mode */
+body.dark-mode .site-footer svg,
+body.dark-mode .site-footer .icon,
+body.dark-mode .site-footer .fa,
+body.dark-mode .site-footer .fab {
+  color: #f1eaf6 !important; /* light text color */
+  fill: #f1eaf6 !important;  /* ensures SVGs render */
+}
