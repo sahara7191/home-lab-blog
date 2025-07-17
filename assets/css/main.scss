@@ -118,51 +118,27 @@ body.dark-mode #theme-icon {
   opacity: 1;
 }
 
-// Keep footer at bottom when page has little content
+/* -------------------------------------------
+   Ensure footer sits at the bottom naturally
+-------------------------------------------- */
+
+.initial-content {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
 .page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.page__content {
   flex: 1;
 }
 
-// Add spacing above footer
-.site-footer {
-  margin-top: 4rem;   // Adjust as needed
-  padding-top: 2rem;  // Optional, gives padding inside the footer
-}
-
-// Stretch layout to full height and push footer down
-.layout--page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.page__content {
-  flex: 1 0 auto;
+/* Footer margin spacing */
+.page__footer {
+  margin-top: auto;
 }
 
 .site-footer {
-  flex-shrink: 0;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   margin-top: 3rem;
-  padding-top: 1rem;
-}
-
-// Fix for pushing footer to bottom on tall pages
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.main {
-  flex: 1;
-}
-
-.site-footer {
-  margin-top: 2rem;
 }
