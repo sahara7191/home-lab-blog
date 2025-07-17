@@ -4,21 +4,6 @@
 @import "minimal-mistakes/skins/plum";
 @import "minimal-mistakes";
 
-.site-footer {
-  margin-top: 4rem; // Adds space above the footer
-  padding-top: 2rem; // Optional: add padding inside footer
-}
-
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.page__content {
-  flex: 1;
-}
-
 /* -----------------------------------------------------
    Dark Mode Manual Overrides
 -------------------------------------------------------- */
@@ -131,4 +116,21 @@ body.dark-mode .dark-mode-toggle,
 body.dark-mode #theme-icon {
   transform: scale(1.1);
   opacity: 1;
+}
+
+// Keep footer at bottom when page has little content
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__content {
+  flex: 1;
+}
+
+// Add spacing above footer
+.site-footer {
+  margin-top: 4rem;   // Adjust as needed
+  padding-top: 2rem;  // Optional, gives padding inside the footer
 }
