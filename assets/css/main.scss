@@ -4,6 +4,21 @@
 @import "minimal-mistakes/skins/plum";
 @import "minimal-mistakes";
 
+.site-footer {
+  margin-top: 4rem; // Adds space above the footer
+  padding-top: 2rem; // Optional: add padding inside footer
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.page__content {
+  flex: 1;
+}
+
 /* -----------------------------------------------------
    Dark Mode Manual Overrides
 -------------------------------------------------------- */
