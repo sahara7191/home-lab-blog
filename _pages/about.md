@@ -34,7 +34,7 @@ I’ve built this lab to closely mimic enterprise conditions — including multi
 - To **demonstrate capability** in real-world tool usage during interviews  
 - To **contribute back** to the community through shareable configs, walkthroughs, and fixes
 
-This blog also serves as a living reference for the configurations, decisions, and issues I’ve worked through — all the stuff that never fits on a resume but makes you better at the job.
+This blog also serves as a living reference for the configurations, decisions, and issues I’ve worked through.
 
 ---
 
