@@ -144,3 +144,11 @@ body {
   font-size: 0.9rem;
   line-height: 1.6;
 }
+
+h1, h2, h3 {
+  font-size: 90%; /* or use rem like 1.4rem */
+}
+
+.page__content {
+  font-size: 0.95rem;
+}
