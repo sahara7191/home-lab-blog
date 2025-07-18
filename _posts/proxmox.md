@@ -1,0 +1,33 @@
+---
+title: "Installing and Deploying Proxmox on a ProLiant Server"
+date: 2025-07-17
+categories: [homelab, proxmox, goad]
+tags: [proxmox, goad, pfSense, openvswitch, active-directory, lab]
+layout: single
+author_profile: true
+toc: true
+---
+
+Why I Chose Proxmox for My Home Lab? A few years ago, I picked up two old HP ProLiant servers on eBay. I didn't have a clear purpose for it at the time, but I knew I'd eventually use it to sharpen my cybersecurity skills.
+
+When I finally decided to build a dedicated home lab, I chose Proxmox VE as the hypervisor for a few reasons:
+- It is a complete open-source platform for enterprise virtualization
+- Bare-Metal Friendly. No Extra OS Required
+- Opportunity to Learn Something New
+
+I had experience with VirtualBox and VMware, but Proxmox was unfamiliar territory. It gave me a chance to explore enterprise-grade virtualization tools hands-on.
+
+---
+
+# **Prerequisites**
+
+*Proxmox .iso file [https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso](https://www.proxmox.com/en/downloads/proxmox-virtual-environment/iso)*
+
+*Hardware*
+
+```bash
+system         ProLiant DL360p Gen8 (763479-B21)
+processor      Intel(R) Xeon(R) CPU E5-2640 0 @ 2.50GHz
+memory         64 GiB 
+storage        1.4 TB, C600/X79 series chipset 4-Port SATA IDE Controller
+```
