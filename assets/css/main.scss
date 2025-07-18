@@ -134,3 +134,13 @@ body.dark-mode .social-icons svg path {
   fill: #f1eaf6 !important;
   color: #f1eaf6 !important;
 }
+
+/* Set smaller base font */
+html {
+  font-size: 15px; /* Default is usually 16px */
+}
+
+body {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
