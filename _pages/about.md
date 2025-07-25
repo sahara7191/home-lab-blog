@@ -6,9 +6,9 @@ permalink: /about/
 
 ---
 
-This blog documents my cybersecurity home lab, a space where I experiment with detection engineering, threat hunting, and digital forensics. 
+This blog documents my learning path and practicing in the cybersecurity home lab, a space where I experiment with detection engineering, pentesting, threat hunting, and digital forensics. 
 
-Everything I publish here is based on hands-on experience: configuring tools like Wazuh, pfSense, and Velociraptor; simulating real-world attacks in Active Directory environments; and applying frameworks like MITRE ATT&CK in lab-scale scenarios.
+Everything I publish here is based on my hands-on experience: configuring tools like Wazuh, pfSense, and Velociraptor; simulating real-world attacks in Active Directory environments; and applying frameworks like MITRE ATT&CK in lab-scale scenarios.
 
 Whether I’m tuning alert rules, analyzing event logs, or breaking something on purpose to figure out how it works, I treat this space as a way to stay sharp, build repeatable processes, and showcase practical skills.
 
