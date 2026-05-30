@@ -23,23 +23,19 @@ toc: true
 
 After spending time exploring local AI tools on Windows, I decided to move my Corsair AI Workstation 300 to **Kubuntu 26.04 LTS** for better performance, full control over my data, and a more cybersecurity-friendly environment. This post documents every step of my fresh setup, from OS installation to running local LLMs entirely offline with Ollama, Docker, Open WebUI, and n8n.
 
-**Why Kubuntu instead of Ubuntu?** Kubuntu is an official Ubuntu flavour with the same base, same `apt`, and same everything underneath, but with the KDE Plasma desktop instead of GNOME. It feels more like Windows in layout, which makes the transition easier, and it is significantly lighter on resources, leaving more RAM for models.
-
----
 
 ## Hardware
 
 ```
-system       Corsair AI Workstation 300
-processor    AMD Ryzen AI Max+ 395 (16-core Zen 5, 32 threads)
-gpu          AMD Radeon 8060S iGPU (gfx1151 / Strix Halo)
-memory       128 GB LPDDR5X unified memory (up to 96 GB addressable as VRAM)
-storage      4 TB (2 x 2 TB M.2 NVMe SSD)
-os           Kubuntu 26.04 LTS (Resolute Raccoon)
-kernel       7.0
+System       Corsair AI Workstation 300
+CPU    AMD Ryzen AI Max+ 395 (16-core Zen 5, 32 threads)
+GPU          AMD Radeon 8060S iGPU (gfx1151 / Strix Halo)
+RAM       128 GB LPDDR5X unified memory (up to 96 GB addressable as VRAM)
+Storage      4 TB (2 x 2 TB M.2 NVMe SSD)
+OS           Kubuntu 26.04 LTS (Resolute Raccoon)
 ```
 
-> **Important:** The Radeon 8060S uses unified memory. There is no separate VRAM chip. The GPU and CPU share the same 128 GB pool, which is what allows running 70B+ models fully on-GPU — impossible on most consumer hardware.
+> **Note:** The Radeon 8060S uses unified memory. There is no separate VRAM chip. The GPU and CPU share the same 128 GB pool, which is what allows running 70B+ models fully on-GPU — impossible on most consumer hardware.
 
 ---
 
