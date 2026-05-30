@@ -11,7 +11,6 @@ Everything published here is based on my own hands-on experience: configuring to
 
 This blog also serves as a living reference for the configurations, decisions, and issues I've worked through.
 
----
 
 ## Who I Am
 
