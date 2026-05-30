@@ -125,9 +125,9 @@ neofetch
 
 ---
 
-## Step 4 — BIOS / Firmware: Allocate Maximum VRAM
+## Step 4 — BIOS / Firmware: Configure UMA Frame Buffer Size
 
-Before configuring AMD ROCm, allocate as much unified memory as possible to the GPU in the BIOS. This unlocks the full 96 GB VRAM for model inference.
+This step is counterintuitive but important. The correct BIOS setting for Linux is the opposite of what most guides recommend for Windows.
 
 Restart and enter the BIOS/UEFI (press **Delete** during boot on the Corsair workstation).
 
@@ -136,14 +136,27 @@ Navigate to:
 Advanced -> AMD CBS -> NBIO -> GFX Configuration -> UMA Frame Buffer Size
 ```
 
-Set it to **Auto** or the maximum available value. The firmware on Strix Halo platforms dynamically allocates up to 96 GB when set to Auto.
+Set it to **512 MB (minimum)**.
 
-Also disable **SDMA** if the option is present, as this has been reported to improve VRAM utilization on Strix Halo:
-```
-Advanced -> AMD CBS -> NBIO -> SDMA -> Disabled
-```
+On Windows, setting this to 96 GB makes sense because AMD Adrenalin manages the VRAM carve-out directly. On Linux, a large fixed carve-out actually reduces the memory available to the OS and limits flexibility. Setting it to minimum forces the GPU to use the GTT pool instead, which gives the same full 128 GB access but in a way the Linux kernel manages much more efficiently for LLM inference.
+
+> **Do not set SDMA in BIOS.** On Linux, SDMA is disabled via an environment variable in a later step, which is safer and more reliable than the BIOS toggle.
 
 Save and reboot back into Kubuntu.
+
+### Verify the setting worked
+
+After booting, run:
+
+```bash
+free -h
+```
+
+On a 128 GB system you should see approximately 124 GiB of total memory visible to the OS. If you see around 31 GiB, the UMA carve-out is too large. Go back into BIOS and reduce it to 512 MB.
+
+### Power / TDP (optional)
+
+While in BIOS, you can also adjust the TDP. The Ryzen AI Max+ 395 is configurable between 45W and 120W. For running Ollama as a 24/7 local inference server, 65-90W is the recommended range — performance gains above 90W are minimal while heat and power draw increase significantly. For maximum throughput during active use, set it to 120W.
 
 ---
 
