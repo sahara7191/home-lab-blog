@@ -125,42 +125,7 @@ neofetch
 
 ---
 
-## Step 4 — BIOS / Firmware: Configure UMA Frame Buffer Size
-
-This step is counterintuitive but important. The correct BIOS setting for Linux is the opposite of what most guides recommend for Windows.
-
-Restart and enter the BIOS/UEFI (press **Delete** during boot on the Corsair workstation).
-
-Navigate to:
-```
-Advanced -> AMD CBS -> NBIO -> GFX Configuration -> UMA Frame Buffer Size
-```
-
-Set it to **512 MB (minimum)**.
-
-On Windows, setting this to 96 GB makes sense because AMD Adrenalin manages the VRAM carve-out directly. On Linux, a large fixed carve-out actually reduces the memory available to the OS and limits flexibility. Setting it to minimum forces the GPU to use the GTT pool instead, which gives the same full 128 GB access but in a way the Linux kernel manages much more efficiently for LLM inference.
-
-> **Do not set SDMA in BIOS.** On Linux, SDMA is disabled via an environment variable in a later step, which is safer and more reliable than the BIOS toggle.
-
-Save and reboot back into Kubuntu.
-
-### Verify the setting worked
-
-After booting, run:
-
-```bash
-free -h
-```
-
-On a 128 GB system you should see approximately 124 GiB of total memory visible to the OS. If you see around 31 GiB, the UMA carve-out is too large. Go back into BIOS and reduce it to 512 MB.
-
-### Power / TDP (optional)
-
-While in BIOS, you can also adjust the TDP. The Ryzen AI Max+ 395 is configurable between 45W and 120W. For running Ollama as a 24/7 local inference server, 65-90W is the recommended range — performance gains above 90W are minimal while heat and power draw increase significantly. For maximum throughput during active use, set it to 120W.
-
----
-
-## Step 5 — Install AMD ROCm
+## Step 4 — Install AMD ROCm
 
 ROCm (Radeon Open Compute) is AMD's GPU compute platform. It allows Ollama and other AI tools to use the GPU for inference instead of falling back to slower CPU computation. Without ROCm, large models (30B+) run unacceptably slow.
 
@@ -213,7 +178,7 @@ You should see output referencing `gfx1151`, your GPU's architecture identifier.
 
 ---
 
-## Step 6 — Critical: Set GPU Override Variable
+## Step 5 — Critical: Set GPU Override Variable
 
 The Radeon 8060S in the Ryzen AI Max+ 395 uses GPU architecture `gfx1151`. Some ROCm builds do not recognize this identifier by default and fall back to CPU inference. The fix is a single environment variable.
 
@@ -243,7 +208,7 @@ echo $HSA_OVERRIDE_GFX_VERSION
 
 ---
 
-## Step 7 — Install Ollama
+## Step 6 — Install Ollama
 
 Ollama manages and runs local LLMs. It handles model downloads, memory allocation, and exposes an API at `localhost:11434` that Open WebUI and n8n connect to.
 
@@ -317,7 +282,7 @@ You should see GPU memory usage increasing as the model loads. If GPU memory sta
 
 ---
 
-## Step 8 — Install Docker
+## Step 7 — Install Docker
 
 Docker is required for running Open WebUI and n8n as containers. Containers keep these services isolated, easy to update, and independent of your system Python or Node versions.
 
@@ -371,7 +336,7 @@ You should see the "Hello from Docker!" message confirming everything is working
 
 ---
 
-## Step 9 — Install Open WebUI
+## Step 8 — Install Open WebUI
 
 Open WebUI is a ChatGPT-style web interface that connects to your local Ollama instance. It runs in Docker and lets you chat with any model you have pulled, manage conversations, and switch between models mid-chat.
 
@@ -409,7 +374,7 @@ You should immediately see your Ollama models listed in the model selector. Sele
 
 ---
 
-## Step 10 — Install n8n (Self-Hosted)
+## Step 9 — Install n8n (Self-Hosted)
 
 n8n is a workflow automation platform. Self-hosting it means all your workflow data, credentials, and execution logs stay on your machine. Combined with the Anthropic API key (instead of claude.ai), this gives you a private AI automation stack.
 
@@ -467,7 +432,7 @@ Paste your API key from `console.anthropic.com`. When using this credential, pro
 
 ---
 
-## Step 11 — Auto-start Everything on Boot
+## Step 10 — Auto-start Everything on Boot
 
 All three services are already configured with `--restart always` in Docker, and Ollama runs as a systemd service. Verify everything starts automatically:
 
@@ -483,7 +448,7 @@ After a reboot, everything should come back up automatically within about 30 sec
 
 ---
 
-## Step 12 — Verify the Full Stack
+## Step 11 — Verify the Full Stack
 
 After rebooting, run the following checklist:
 
