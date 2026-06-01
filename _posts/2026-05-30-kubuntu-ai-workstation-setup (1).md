@@ -74,7 +74,7 @@ Plug in the USB, restart the Corsair workstation, and press **F11** (or **Delete
 - Language: English
 - Keyboard: your preference
 - Installation type: **Erase disk and install Kubuntu** (full fresh install)
-- Partition: default (Kubuntu handles it automatically for NVMe)
+- Partition: default (Kubuntu handles it automatically for ext4)
 - Create a strong username and password
 
 > **Tip:** If you plan to dual-boot with Windows later, choose "Install Kubuntu alongside Windows" instead of erasing. For a dedicated AI workstation, a full erase gives cleaner performance.
