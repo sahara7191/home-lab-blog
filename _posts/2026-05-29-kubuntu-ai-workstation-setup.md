@@ -260,7 +260,7 @@ wget https://repo.radeon.com/rocm/rocm.gpg.key -O - | \
 
 # Add the ROCm repository for Ubuntu 26.04
 echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/rocm.gpg] \
-  https://repo.radeon.com/rocm/apt/7.2/ resolute main" | \
+  https://repo.radeon.com/rocm/apt/latest/ resolute main" | \
   sudo tee /etc/apt/sources.list.d/rocm.list
 
 # Add the amdgpu repository
