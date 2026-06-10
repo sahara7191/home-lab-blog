@@ -110,7 +110,6 @@ This keeps the fixed GPU carve-out at 1 GB and lets the Linux kernel manage the 
 
 While in this menu, confirm these two settings are enabled (they should be by default):
 
-| Setting | Should be |
 |---|---|
 | PCIe Resizable BAR | Enabled |
 | Above 4G Decoding | Enabled |
@@ -250,55 +249,43 @@ Swap:   15Gi
 ## Step 5 — Install AMD ROCm
 
 ROCm (Radeon Open Compute) is AMD's GPU compute platform. It allows Ollama and other AI tools to use the GPU for inference instead of falling back to slower CPU computation. Without ROCm, large models (30B+) run unacceptably slow.
+One of the most welcome changes in Ubuntu 26.04 LTS is that ROCm now ships natively through Ubuntu's official repositories. No third-party repos, no GPG keys, no codename issues; a single `apt install` is all that's needed.
 
-### Add the AMD ROCm repository
-
-```bash
-# Download and add AMD's signing key
-wget https://repo.radeon.com/rocm/rocm.gpg.key -O - | \
-  gpg --dearmor | sudo tee /etc/apt/keyrings/rocm.gpg > /dev/null
-
-# Add the ROCm repository for Ubuntu 26.04
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/rocm.gpg] \
-  https://repo.radeon.com/rocm/apt/latest/ resolute main" | \
-  sudo tee /etc/apt/sources.list.d/rocm.list
-
-# Add the amdgpu repository
-echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/rocm.gpg] \
-  https://repo.radeon.com/amdgpu/latest/ubuntu resolute main" | \
-  sudo tee /etc/apt/sources.list.d/amdgpu.list
-```
-
-### Install ROCm packages
+### Install ROCm
 
 ```bash
-sudo apt update
-sudo apt install -y rocm-hip-libraries rocm-dev rocminfo rocm-smi-lib
+sudo apt install -y rocm
+sudo systemctl daemon-reload
 ```
 
 ### Add your user to the render and video groups
 
-This allows your user account (not just root) to access the GPU.
+This allows your user account (not just root) to access the GPU. Required for Ollama and other tools to use ROCm correctly.
 
 ```bash
 sudo usermod -aG render,video $USER
-```
-
-Log out and back in for group changes to take effect, or run:
-
-```bash
 newgrp render
 ```
 
 ### Verify ROCm detects your GPU
 
 ```bash
-rocminfo | grep -A 5 "Agent 2"
+rocminfo | grep gfx1151
 ```
 
-You should see output referencing `gfx1151`, your GPU's architecture identifier.
+Expected output:
 
----
+```
+Name:                    gfx1151
+Name:                    amdgcn-amd-amdhsa--gfx1151
+```
+
+If you see both lines, ROCm is working and your GPU is fully recognized. Also confirm your user is in the correct groups:
+
+```bash
+groups
+# render should appear in the output
+```
 
 ## Step 6 — Critical: Set GPU Override Variable
 
