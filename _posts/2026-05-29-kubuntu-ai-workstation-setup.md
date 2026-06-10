@@ -96,10 +96,9 @@ Advanced -> GFX Configuration -> iGPU Configuration
 
 You will see two options:
 
-| Option | Choose? |
 |---|---|
-| AUTO | No — allocates 64 GB fixed carve-out automatically, leaving only ~62 GiB visible to the OS |
-| **UMA_SPECIFIED** | Yes — lets you set the minimum carve-out manually |
+| AUTO | Allocates 64 GB fixed carve-out automatically, leaving only ~62 GiB visible to the OS |
+| **UMA_SPECIFIED** | Lets you set the minimum carve-out manually |
 
 Select **UMA_SPECIFIED** and enter **1024 MB (1 GB)** as the value.
 
