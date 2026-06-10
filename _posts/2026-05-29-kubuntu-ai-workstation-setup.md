@@ -264,7 +264,7 @@ This allows your user account (not just root) to access the GPU. Required for Ol
 
 ```bash
 sudo usermod -aG render,video $USER
-newgrp render
+sudo reboot
 ```
 
 ### Verify ROCm detects your GPU
