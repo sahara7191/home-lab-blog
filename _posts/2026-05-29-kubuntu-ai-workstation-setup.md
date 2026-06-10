@@ -171,7 +171,7 @@ sudo apt install -y \
   wget \
   git \
   htop \
-  neofetch \
+  fastfetch \
   nano \
   build-essential \
   software-properties-common \
