@@ -287,7 +287,7 @@ groups
 # render should appear in the output
 ```
 
-## Step 6 — Critical: Set GPU Override Variable
+## Step 6 — Set GPU Override Variable
 
 The Radeon 8060S in the Ryzen AI Max+ 395 uses GPU architecture `gfx1151`. Some ROCm builds do not recognize this identifier by default and fall back to CPU inference. The fix is a single environment variable.
 
@@ -313,7 +313,7 @@ echo $HSA_OVERRIDE_GFX_VERSION
 # Should output: 11.5.1
 ```
 
-> **Why this matters:** Without this variable, Ollama may silently fall back to CPU-only inference, giving you roughly 2-5 tokens/sec on a 30B model instead of 30-40 tokens/sec. This single line makes an enormous difference.
+> Without this variable, Ollama may silently fall back to CPU-only inference, giving you roughly 2-5 tokens/sec on a 30B model instead of 30-40 tokens/sec. This single line makes an enormous difference.
 
 ---
 
