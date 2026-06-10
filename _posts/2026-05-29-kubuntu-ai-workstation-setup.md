@@ -186,7 +186,7 @@ sudo apt install -y \
 Verify your system with:
 
 ```bash
-neofetch
+fastfetch
 ```
 
 ### Verify memory
