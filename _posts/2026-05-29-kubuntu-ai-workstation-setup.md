@@ -366,7 +366,7 @@ sudo systemctl restart ollama
 
 ```bash
 # Fast and capable — good starting point
-ollama pull qwen3:30b
+ollama pull qwen3.6:35b
 
 # For coding and script writing
 ollama pull qwen2.5-coder:32b
