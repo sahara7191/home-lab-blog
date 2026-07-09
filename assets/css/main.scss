@@ -139,3 +139,24 @@ body.dark-mode .social-icons svg path {
 html {
   font-size: 20px; /* Default is usually 16px */
 }
+
+/* Table header contrast fix */
+table thead th {
+  background-color: #4a1a6b;
+  color: #f1eaf6;
+  font-weight: bold;
+}
+
+body.dark-mode table thead th {
+  background-color: #6a2d9a;
+  color: #ffffff;
+}
+
+body.dark-mode table tbody tr {
+  background-color: #2d1e37;
+  color: #f1eaf6;
+}
+
+body.dark-mode table tbody tr:nth-child(even) {
+  background-color: #3a2548;
+}
