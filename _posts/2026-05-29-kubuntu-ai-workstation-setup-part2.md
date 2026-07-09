@@ -76,7 +76,7 @@ sudo systemctl restart ollama
 ollama pull qwen3.6:35b
 
 # Best for coding and writing security scripts
-ollama pull qwen2.5-coder:32b
+ollama pull qwen3-coder:30b
 
 # Specialized OCR — extract text from images and documents
 ollama pull glm-ocr
