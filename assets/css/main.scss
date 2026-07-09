@@ -140,6 +140,15 @@ html {
   font-size: 20px; /* Default is usually 16px */
 }
 
+table thead tr th {
+  background-color: #4a0080;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+table thead {
+  border-bottom: 2px solid #6a0dad;
+}
 body {
   font-size: 0.9rem;
   line-height: 1.6;
