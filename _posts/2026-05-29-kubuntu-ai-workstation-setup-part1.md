@@ -106,11 +106,12 @@ This keeps the fixed GPU carve-out at 1 GB and lets the Linux kernel manage the 
 
 While in this menu, confirm these two settings are enabled (they should be by default):
 
-| Setting | Should be |
+| Setting | Option |
 |---|---|
 | PCIe Resizable BAR | Enabled |
 | Above 4G Decoding | Enabled |
 
+---
 
 These two always go together. Resizable BAR allows the CPU to access the full GPU memory at once instead of in 256 MB chunks. Above 4G Decoding is required for Resizable BAR to work. Both are critical for LLM inference performance on unified memory hardware.
 
