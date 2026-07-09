@@ -106,7 +106,6 @@ This keeps the fixed GPU carve-out at 1 GB and lets the Linux kernel manage the 
 
 While in this menu, confirm these two settings are enabled (they should be by default):
 
-| Setting | Should be |
 |---|---|
 | PCIe Resizable BAR | Enabled |
 | Above 4G Decoding | Enabled |
