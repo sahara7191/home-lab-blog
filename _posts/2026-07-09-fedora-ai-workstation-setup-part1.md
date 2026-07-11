@@ -16,7 +16,7 @@ layout: single
 author_profile: true
 toc: true
 ---
-
+<br>
 
 This is my second attempt at building a Linux AI workstation on the Corsair AI Workstation 300. My first try was Kubuntu 26.04, and while the AI stack itself worked well, I ran into repeated system freezes: mouse and keyboard locking up and eventually a black screen on boot. After research, it turned out the instability came from a known firmware issue and missing kernel parameters for the Strix Halo platform, not from the distro itself.
 
