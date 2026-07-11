@@ -338,6 +338,8 @@ To build your first chat workflow:
 5. In the Ollama Chat Model node, select your credential and choose a model such as `qwen3.6:35b`
 6. Click **Open chat** at the bottom to test it
 
+![n8n chat workflow with Ollama]({{ "/assets/images/n8n-ollama-first-chat.png" | relative_url }})
+
 Your local model will respond through n8n with no API key, no usage costs, and no data leaving your machine.
 
 ### Connect n8n to Anthropic API (optional, for Claude)
