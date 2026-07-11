@@ -25,14 +25,24 @@ This is Part 2 of the Fedora Workstation 43 AI Workstation setup on the Corsair 
 
 ---
 
-## Step 7 — Set Up the Second Drive (Optional)
+## Step 7: Set Up the Second Drive (Optional)
 
 The Corsair AI Workstation 300 ships with two 2 TB NVMe drives. Fedora installs onto the first one, leaving the second unformatted (it arrives with a leftover Windows BitLocker partition from the factory image). This second drive is ideal for storing large model files, disk images, memory dumps, and case data.
 
 First, identify the drives:
 
 ```bash
-lsblk
+fedora:~$ lsblk
+
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+zram0       251:0    0    8G  0 disk [SWAP]
+nvme0n1     259:0    0  1.9T  0 disk 
+└─nvme0n1p1 259:2    0  1.9T  0 part 
+nvme1n1     259:1    0  1.9T  0 disk 
+├─nvme1n1p1 259:3    0  600M  0 part /boot/efi
+├─nvme1n1p2 259:4    0    2G  0 part /boot
+└─nvme1n1p3 259:5    0  1.9T  0 part /home
+                                     /
 ```
 
 You will see the system drive with `/boot`, `/`, and `/home` partitions, and a second drive with a single unused partition. In my case the system was on `nvme1n1` and the empty second drive was `nvme0n1`. Adjust the device names below to match your output.
