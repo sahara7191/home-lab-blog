@@ -86,6 +86,7 @@ df -h /mnt/storage
 
 If `df -h` shows `/mnt/storage` with ~1.8 TB available, the drive is set up correctly.
 
+Result:
 ```bash
 sahara@fedora:~$ df -h /mnt/storage
 Filesystem      Size  Used Avail Use% Mounted on
@@ -94,7 +95,6 @@ Filesystem      Size  Used Avail Use% Mounted on
 
 > **Optional: store Ollama models here.** Models are large (a 35B model is ~23 GB, a 70B model ~40 GB). To keep them off the system drive, add `Environment="OLLAMA_MODELS=/mnt/storage/ollama-models"` to the Ollama systemd override created in the next step. I chose to keep models on the system drive for now, but the option is there if space runs low.
 
----
 
 ## Step 8 — Install Ollama
 
