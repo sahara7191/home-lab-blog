@@ -133,7 +133,7 @@ Environment="HSA_ENABLE_SDMA=0"
 Environment="OLLAMA_HOST=0.0.0.0"
 ```
 
-> `OLLAMA_HOST=0.0.0.0` makes Ollama accessible from other devices on your local network, and is also required for Docker containers like n8n to reach it. Keep this line.
+> `OLLAMA_HOST=0.0.0.0` makes Ollama accessible from other devices on your local network, and is also required for Docker containers like n8n to reach it.
 
 Reload and restart the service:
 
@@ -154,10 +154,10 @@ sudo firewall-cmd --reload
 ### Pull your first models
 
 ```bash
-# Best all-round, good starting point
+# All-round, good starting point
 ollama pull qwen3.6:35b
 
-# Best for coding and writing security scripts
+# For coding and writing security scripts
 ollama pull qwen3-coder:30b
 
 # Specialized OCR, extract text from images and documents
@@ -183,7 +183,6 @@ During inference you should see `GPU%` at 90-97% and `VRAM%` increasing as the m
 
 > The warning `AMD GPU device(s) is/are in a low-power state` when the GPU is idle is harmless. It just means the GPU clocked down between requests, which is expected behavior.
 
----
 
 ## Step 9 — Install Docker
 
