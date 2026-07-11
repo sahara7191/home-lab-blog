@@ -17,13 +17,13 @@ author_profile: true
 toc: true
 ---
 
+
 This is my second attempt at building a Linux AI workstation on the Corsair AI Workstation 300. My first try was Kubuntu 26.04, and while the AI stack itself worked well, I ran into repeated system freezes: mouse and keyboard locking up and eventually a black screen on boot. After research, it turned out the instability came from a known firmware issue and missing kernel parameters for the Strix Halo platform, not from the distro itself.
 
 This time I went with **Fedora Workstation**. The [amd-strix-halo-toolboxes project](https://github.com/kyuz0/amd-strix-halo-toolboxes) documents the stable configurations for this exact hardware, Fedora ships the newest kernels and firmware fastest, and *gfx1151* support comes compiled in. The [Strix Halo wiki](https://llm-tracker.info/_TOORG/Strix-Halo) is another excellent community resource that tracks driver and ROCm progress for this chip.
 
 This post covers OS installation and base configuration, including the stability fixes from day one. Part 2 covers the full AI stack: Ollama, Open WebUI, and n8n.
 
----
 
 ## Hardware
 
@@ -38,7 +38,6 @@ os           Fedora Workstation 44
 
 > **Important:** The Radeon 8060S uses unified memory. There is no separate VRAM chip. The GPU and CPU share the same 128 GB pool, which is what allows running 70B+ models fully on-GPU, something impossible on most consumer hardware.
 
----
 
 ## Prerequisites
 
