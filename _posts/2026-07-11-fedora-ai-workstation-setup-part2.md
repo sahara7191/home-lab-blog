@@ -32,7 +32,7 @@ The Corsair AI Workstation 300 ships with two 2 TB NVMe drives. Fedora installs 
 First, identify the drives:
 
 ```bash
-fedora:~$ lsblk
+sahara@fedora:~$ lsblk
 
 NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 zram0       251:0    0    8G  0 disk [SWAP]
@@ -63,7 +63,7 @@ sudo mount /dev/nvme0n1p1 /mnt/storage
 sudo blkid /dev/nvme0n1p1
 ```
 
-Copy the UUID from the `blkid` output and add it to fstab so the drive mounts automatically on every boot:
+Copy the UUID from the `blkid` output and add it to `fstab` so the drive mounts automatically on every boot:
 
 ```bash
 echo 'UUID=YOUR_UUID_HERE /mnt/storage ext4 defaults 0 2' | sudo tee -a /etc/fstab
@@ -85,6 +85,12 @@ df -h /mnt/storage
 ```
 
 If `df -h` shows `/mnt/storage` with ~1.8 TB available, the drive is set up correctly.
+
+```bash
+sahara@fedora:~$ df -h /mnt/storage
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/nvme0n1p1  1.9T  2.1M  1.8T   1% /mnt/storage
+```
 
 > **Optional: store Ollama models here.** Models are large (a 35B model is ~23 GB, a 70B model ~40 GB). To keep them off the system drive, add `Environment="OLLAMA_MODELS=/mnt/storage/ollama-models"` to the Ollama systemd override created in the next step. I chose to keep models on the system drive for now, but the option is there if space runs low.
 
