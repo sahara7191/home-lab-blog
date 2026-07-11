@@ -163,10 +163,10 @@ body.dark-mode table tbody tr:nth-child(even) {
 /* More breathing room between sidebars and content */
 @media (min-width: 1024px) {
   .sidebar {
-    padding-right: 2em;
+    padding-right: 3em;
   }
   .sidebar__right {
-    padding-left: 2em;
+    padding-left: 3em;
     padding-right: 0;
   }
 }
