@@ -87,8 +87,8 @@ You will see two options:
 | AUTO | No | Allocates a 64 GB fixed carve-out automatically, leaving only ~62 GiB visible to the OS |
 | UMA_SPECIFIED | **Yes** | Set to 1024 MB, gives the full ~124 GiB to the OS |
 
-Select **UMA_SPECIFIED** and enter **1024 MB (1 GB)** as the value.
 
+Select **UMA_SPECIFIED** and enter **1024 MB (1 GB)** as the value.
 This keeps the fixed GPU carve-out at 1 GB and lets the Linux kernel manage the remaining memory dynamically via GTT. The GPU can still access the full memory pool for model inference, but the OS sees 124 GiB instead of 62 GiB.
 
 ### Check remaining GFX settings
