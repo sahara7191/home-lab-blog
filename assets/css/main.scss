@@ -159,3 +159,14 @@ body.dark-mode table tbody tr {
 body.dark-mode table tbody tr:nth-child(even) {
   background-color: #3a2548;
 }
+
+/* More breathing room between sidebars and content */
+@media (min-width: 1024px) {
+  .sidebar {
+    padding-right: 2em;
+  }
+  .sidebar__right {
+    padding-left: 2em;
+    padding-right: 0;
+  }
+}
