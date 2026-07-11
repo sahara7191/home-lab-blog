@@ -206,7 +206,7 @@ Verify the parameters are active:
 cat /proc/cmdline
 # Should include amd_iommu=off amdgpu.gttsize=126976 ttm.pages_limit=32505856
 ```
----
+
 
 ## Step 5: Install AMD ROCm
 
@@ -249,7 +249,6 @@ groups
 # render and video should appear in the output
 ```
 
----
 
 ## Step 6: Set GPU Override Variables
 
