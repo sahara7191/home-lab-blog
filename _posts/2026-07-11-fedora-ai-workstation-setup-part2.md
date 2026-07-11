@@ -269,9 +269,8 @@ http://localhost:8080
 
 On first launch, create an admin account. Your username and password are stored locally. Nothing is sent to any external service.
 
-You should immediately see your Ollama models listed in the model selector. Select one and start chatting. This is now 100% local, zero data leaving your machine.
+You should see your Ollama models listed in the model selector. Select one and start chatting. This is now 100% local, zero data leaving your machine.
 
----
 
 ## Step 11 — Install n8n (Self-Hosted)
 
@@ -296,8 +295,6 @@ docker run -d \
   docker.n8n.io/n8nio/n8n
 ```
 
-> The older `N8N_BASIC_AUTH` environment variables are deprecated in current n8n versions and no longer work. n8n now uses its own internal account system instead.
-
 ### Access n8n
 
 Open your browser and navigate to:
@@ -306,9 +303,9 @@ Open your browser and navigate to:
 http://localhost:5678
 ```
 
-On first launch, n8n will ask you to create an owner account with your email and a password. This account is stored locally in `~/n8n-data`. Nothing is sent to any external service. Use this account to log in on all future visits.
+On first launch, n8n will ask you to create an owner account with an email and a password. This account is stored locally in `~/n8n-data`. 
 
-### Connect n8n to Ollama (local AI, zero cost)
+### Connect n8n to Ollama 
 
 n8n runs inside a Docker container, so `localhost` inside the container refers to the container itself, not your host machine where Ollama is running. You need to use your machine's local IP address instead.
 
