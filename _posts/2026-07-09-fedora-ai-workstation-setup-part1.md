@@ -1,5 +1,5 @@
 ---
-title: "Fedora Workstation with AI Setup: Installing and Configuring the OS for Strix Halo (Part 1)"
+title: "Fedora Workstation Setup: Installing and Configuring the OS for Strix Halo (Part 1)"
 date: 2026-07-09
 categories:
   - homelab
