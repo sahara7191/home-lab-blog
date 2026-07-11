@@ -51,13 +51,11 @@ Ventoy lets you boot multiple ISOs from one USB drive without reformatting it ea
 
 A USB drive with at least **8 GB** of space is required.
 
----
 
 ## Step 1: Create Bootable USB with Ventoy
 
 Download and install Ventoy on your USB drive (this will format it, so back up any existing files first). Once installed, copy the Fedora `.iso` file to the USB drive.
 
----
 
 ## Step 2: BIOS Configuration
 
