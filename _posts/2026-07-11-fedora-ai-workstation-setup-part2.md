@@ -344,11 +344,12 @@ Your local model will respond through n8n with no API key, no usage costs, and n
 
 ### Connect n8n to Anthropic API (optional, for Claude)
 
-For tasks where you need Claude's capabilities (better reasoning, larger context), you can add an Anthropic API key to n8n. Go to **Overview -> Credentials -> Create credential** and search for Anthropic, or create the credential inline when adding an **Anthropic** node to a workflow.
+For tasks where you need Claude's capabilities (better reasoning, larger context), you can add an Anthropic API key to n8n. 
+Go to ***Overview -> Credentials -> Create credential*** and search for Anthropic, or create the credential inline when adding an **Anthropic** node to a workflow.
 
 Paste your API key from `console.anthropic.com`. When using this credential, prompts are sent to Anthropic's servers and results come back to your local n8n instance. No data is stored in claude.ai.
 
-I have not set this up yet since the local Ollama models cover my current needs, but the option is there when a task calls for a larger model.
+> I have not set this up yet since the local Ollama models cover my current needs, but the option is there when a task calls for a larger model.
 
 
 ## Step 12 — Auto-start Everything on Boot
