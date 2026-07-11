@@ -1,5 +1,5 @@
 ---
-title: "Fedora Workstation 43 AI Stack: Ollama, Open WebUI & n8n (Part 2)"
+title: "Fedora Workstation with AI Stack: Ollama, Open WebUI & n8n (Part 2)"
 date: 2026-07-09
 categories:
   - homelab
