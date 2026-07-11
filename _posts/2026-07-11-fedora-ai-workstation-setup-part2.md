@@ -349,83 +349,7 @@ Go to ***Overview -> Credentials -> Create credential*** and search for Anthropi
 
 Paste your API key from `console.anthropic.com`. When using this credential, prompts are sent to Anthropic's servers and results come back to your local n8n instance. No data is stored in claude.ai.
 
-> I have not set this up yet since the local Ollama models cover my current needs, but the option is there when a task calls for a larger model.
-
-
-## Step 12 — Auto-start Everything on Boot
-
-All services are configured to start automatically: Docker containers use `--restart always`, and Ollama and Docker run as systemd services. Verify:
-
-```bash
-# Check all running containers
-docker ps
-
-# Check Ollama service
-systemctl status ollama
-```
-
-After a reboot, everything should come back up automatically within about 30 seconds.
-
----
-
-## Step 13 — Verify the Full Stack
-
-After rebooting, run the following checklist:
-
-```bash
-# 1. Check kernel parameters are active
-cat /proc/cmdline
-
-# 2. Check GPU recognition
-rocminfo | grep gfx1151
-
-# 3. Check Ollama is running and GPU-accelerated
-ollama ps
-
-# 4. Check Docker containers
-docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
-```
-
-Expected output:
-
-```
-NAMES          STATUS          PORTS
-open-webui     Up X minutes
-n8n            Up X minutes    0.0.0.0:5678->5678/tcp
-```
-
-Then confirm the web interfaces:
-
-| Service     | URL                    |
-|-------------|------------------------|
-| Open WebUI  | http://localhost:8080  |
-| n8n         | http://localhost:5678  |
-| Ollama API  | http://localhost:11434 |
-
----
-
-## Recommended Models
-
-Given the ~96 GB of GPU-accessible memory on this machine, you can run models that are impossible on typical consumer hardware. For detailed benchmarks of different models and backends on Strix Halo, see the community [interactive benchmark viewer](https://kyuz0.github.io/amd-strix-halo-toolboxes/).
-
-```bash
-# Best all-round, near cloud quality, 100% local
-ollama pull qwen3.6:35b
-
-# Best for coding and writing security scripts
-ollama pull qwen3-coder:30b
-
-# Deep reasoning, useful for log analysis and threat hunting
-ollama pull deepseek-r1:32b
-
-# Rivals cloud AI performance
-ollama pull llama3.3:70b
-
-# OCR and document extraction from images
-ollama pull glm-ocr
-```
-
-> Start with `qwen3.6:35b`. It loads fast and performs surprisingly close to 70B models for most tasks. Use it as your daily driver and pull larger models when you need deeper reasoning.
+*I have not set this up yet since the local Ollama models cover my current needs, but the option is there when a task calls for a larger model.*
 
 ---
 
@@ -445,59 +369,8 @@ Everything runs on your hardware. No conversation history is stored in any cloud
 
 ---
 
-## Troubleshooting
-
-**Ollama not using GPU (slow inference)**
-
-Check that the environment variables are set correctly in the service:
-```bash
-sudo systemctl cat ollama | grep HSA
-# Should show both HSA_OVERRIDE_GFX_VERSION and HSA_ENABLE_SDMA
-```
-
-If missing, repeat the systemd override step in Step 8 and restart the service.
-
-**n8n cannot connect to Ollama**
-
-First verify Ollama is reachable at your local IP:
-```bash
-curl http://$(hostname -I | awk '{print $1}'):11434/api/tags
-```
-
-If this times out, check the firewall:
-```bash
-sudo firewall-cmd --list-ports
-# Should include 11434/tcp, if not repeat the firewall step
-```
-
-**n8n container not starting or permission errors**
-
-On Fedora this is almost always SELinux. Make sure the volume mount includes the `:z` flag:
-```bash
-docker logs n8n
-# If you see EACCES or permission denied errors, recreate the container with -v ~/n8n-data:/home/node/.n8n:z
-```
-
-**Open WebUI not connecting to Ollama**
-
-Verify Ollama is listening:
-```bash
-curl http://localhost:11434/api/tags
-```
-
-If it returns JSON with your models, Ollama is working. Restart the Open WebUI container:
-```bash
-docker restart open-webui
-```
-
-**System freezes (mouse and keyboard stop responding)**
-
-This is the Strix Halo stability issue covered in Part 1. Verify all three fixes are in place: firmware newer than 20251125 (`rpm -q linux-firmware`), kernel parameters active (`cat /proc/cmdline`), and never use `newgrp` after group changes. See the [community host configuration guide](https://github.com/kyuz0/amd-strix-halo-toolboxes) for the latest known-stable setup.
-
----
-
 ## What's Next
 
-With the full stack running, the next project in this home lab is an **IOC enrichment pipeline** built in n8n: paste an IP address or file hash, and the workflow automatically queries VirusTotal, AbuseIPDB, and Shodan, then passes the combined results to a local Ollama model that writes a plain-language verdict. 
+The next project in this home lab is an **IOC enrichment pipeline** built in n8n: paste an IP address or file hash, and the workflow automatically queries VirusTotal, AbuseIPDB, and Shodan, then passes the combined results to a local Ollama model that writes a plain-language verdict. 
 
 
