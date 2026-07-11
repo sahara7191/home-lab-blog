@@ -17,7 +17,7 @@ layout: single
 author_profile: true
 toc: true
 ---
-</br>
+<br>
 
 This is Part 2 of the Fedora Workstation 43 AI Workstation setup on the Corsair AI Workstation 300 (Strix Halo). Part 1 covered OS installation, BIOS configuration, the critical kernel parameters for stability, ROCm, and the GPU override variables. This post covers the full AI stack: Ollama for local LLMs, Open WebUI for a browser-based chat interface, and n8n for agentic AI automation.
 
