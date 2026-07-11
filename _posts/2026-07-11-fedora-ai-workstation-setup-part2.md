@@ -210,7 +210,7 @@ sudo dnf install -y \
 
 ### Enable and start Docker
 
-Unlike Ubuntu, Fedora does not start Docker automatically after installation:
+Fedora does not start Docker automatically after installation:
 
 ```bash
 sudo systemctl enable --now docker
@@ -225,8 +225,6 @@ sudo usermod -aG docker $USER
 sudo reboot
 ```
 
-> Do not use `newgrp docker` on Wayland desktops. It can freeze mouse and keyboard input. A reboot applies the group change cleanly and permanently.
-
 ### Verify Docker is working
 
 ```bash
@@ -236,7 +234,6 @@ docker run hello-world
 
 You should see the "Hello from Docker!" message confirming everything is working.
 
----
 
 ## Step 10 — Install Open WebUI
 
