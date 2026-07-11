@@ -58,12 +58,6 @@ A USB drive with at least **8 GB** of space is required.
 
 Download and install Ventoy on your USB drive (this will format it, so back up any existing files first). Once installed, copy the Fedora `.iso` file to the USB drive.
 
-```
-USB structure after setup:
-├── ventoy/          <- Ventoy system files (do not touch)
-└── Fedora-Workstation-Live-43.iso  <- your ISO
-```
-
 ---
 
 ## Step 2: BIOS Configuration
