@@ -140,11 +140,7 @@ The Strix Halo community identified that the **linux-firmware-20251125** package
 ```bash
 rpm -q linux-firmware
 ```
-
-Output:
-```bash
-linux-firmware-20260622-1.fc44.noarch
-```
+My output shows `linux-firmware-20260622-1.fc44.noarch`
 
 If you see version 20251125, upgrade immediately:
 
