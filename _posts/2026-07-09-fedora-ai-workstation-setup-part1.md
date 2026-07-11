@@ -104,7 +104,6 @@ Confirm these two settings are enabled (they should be by default):
 
 Save all settings and exit.
 
----
 
 ## Step 3: Install Fedora
 
@@ -119,7 +118,6 @@ Installation destination: select the first NVMe drive, choose **Erase disk and i
 
  After completion, remove the USB and reboot.
 
----
 
 ## Step 4: First Boot Configuration
 
@@ -141,6 +139,11 @@ The Strix Halo community identified that the **linux-firmware-20251125** package
 
 ```bash
 rpm -q linux-firmware
+```
+
+Output:
+```bash
+linux-firmware-20260622-1.fc44.noarch
 ```
 
 If you see version 20251125, upgrade immediately:
