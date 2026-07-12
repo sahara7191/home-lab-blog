@@ -27,8 +27,6 @@ My technical interests include:
 - Local AI for security workflows (Ollama, Open WebUI, self-hosted LLMs)
 - AI-powered automation and agents (n8n, agentic pipelines for threat intel and reporting)
 
-The lab closely mimics enterprise conditions, including multiple VLANs, domain controllers, and monitored endpoints. The AI workstation side runs Kubuntu with a fully local, privacy-first stack.
-
 ---
 
 📫 You can explore my work throughout the blog or connect with me via [GitHub](https://github.com/sahara7191).
