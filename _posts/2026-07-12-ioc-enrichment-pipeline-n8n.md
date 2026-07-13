@@ -19,6 +19,7 @@ layout: single
 author_profile: true
 toc: true
 ---
+<br>
 
 IOC enrichment is one of those tasks that eats an analyst's day. You get an IP address or a file hash, and then you open VirusTotal in one tab, AbuseIPDB in another, Shodan in a third, copy and paste between them, and try to form a judgment. Repeat fifty times during an investigation and it stops being analysis and starts being data entry.
 
