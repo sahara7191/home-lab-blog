@@ -26,11 +26,12 @@ Using n8n for Indicator of Compromise (IOC) enrichment allows you to build power
 This post builds a simple n8n pipeline that automates the loop: paste an indicator, it queries threat intel sources, correlates them, and has a local LLM write a plain-language verdict. 
 
 Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blog/homelab/fedora-ai-setup-part1/) (OS and ROCm), [Part 2](/home-lab-blog/homelab/fedora-ai-setup-part2/) (Ollama, Open WebUI, n8n).
+<br>
 
 ## Workflow Overview
 
 ![IOC Workflow]({{ "/assets/images/IOC-Workflow.png" | relative_url }})
-
+<br>
 
 ## Prerequisites
 
@@ -45,8 +46,8 @@ Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blo
 | Shodan | Port and service exposure | [shodan.io](https://www.shodan.io) |
 
 One source alone is easy to misread. Together they let the model weigh agreement and conflict between signals before committing to a verdict.
-<br>
 
+<br>
 
 ## Step 1: The Form Trigger
 
@@ -58,6 +59,7 @@ Add an **On form submission** node:
 
 Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your input echoed back (`ioc: 8.8.8.8`).
 
+<br>
 
 ## Step 2: Route with a Switch
 
@@ -65,7 +67,7 @@ The pipeline routes IPs and hashes to different endpoints. A **Switch** node wit
 
 Add a **Switch** node and set parameters in Mode **Rules**:
 
-**Routing Rule 1 — IP addresses**
+**<u>Routing Rule 1 — IP addresses</u>**
 
 - **Value 1** (Expression): {% raw %}`{{ $json.ioc }}`{% endraw %}
 - **Operator**: *String - matches regex*
@@ -73,7 +75,8 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 - **Rename Output**: *ON*
 - **Output Name**: *ip*
 
-**Routing Rule 2 — Hashes** *(The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64))*
+
+**<u>Routing Rule 2 — Hashes</u>** 
 
 - **Value 1** (Expression): {% raw %}`{{ $json.ioc }}`{% endraw %}
 - **Operator**: *String - matches regex*
@@ -81,6 +84,9 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 - **Rename Output**: *ON*
 - **Output Name**: *hash*
 
+*The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64)*
+<br>
+<br>
 
 ## Step 3: The IP Path
 
@@ -114,11 +120,11 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 - **Authentication**: *Generic Credential Type - Query Auth* (Name: `key`, lowercase)
 
 > Shodan's parameter name is case-sensitive. `Key` instead of `key` returns 401 Unauthorized with a misleading "check your credentials" message even though the key is fine.
-
+<br>
 
 ## Step 4: Correlate the IP Results
 
-Add a **Code** node named `IP merge` after Shodan. It pulls the useful fields from all three responses and builds the prompt.
+Add a **Code** node after Shodan (I renamed mine to ***IP merge***). It pulls the useful fields from all three responses and builds the prompt.
 
 ```javascript
 const abuse = $('AbuseIPDB').item.json.data;
