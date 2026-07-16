@@ -96,12 +96,13 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 - **URL**: `https://api.abuseipdb.com/api/v2/check`
 - **Authentication**: *Generic Credential Type - Header Auth* (Name: `Key`)
 - **Send Query Parameters**: *ON*
-  - Query Parameter 1 *(Name=Value)*: `ipAddress` = {% raw %}`{{ $json.ioc }}`{% endraw %} *(expression)*
+  - Query Parameter 1 *(Name=Value)*: `ipAddress` = {% raw %}`{{ $json.ioc }}`{% endraw %}
   - Query Parameter 1 *(Name=Value)*: `maxAgeInDays` = `90`
 - **Send Headers**: *ON*
   - Header *(Name=Value)*: = `Accept` = `application/json`
 <br>
-![AbuseIPDB1 Node]({{ "/assets/images/AbuseIPDB1-Node.png" | relative_url }})
+<br>
+
 ![AbuseIPDB2 Node]({{ "/assets/images/AbuseIPDB2-Node.png" | relative_url }})
 
 
