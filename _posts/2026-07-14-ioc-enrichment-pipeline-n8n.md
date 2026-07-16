@@ -50,17 +50,16 @@ One source alone is easy to misread. Together they let the model weigh agreement
 
 ## Step 1: The Form Trigger
 
-Add an **On form submission** node.
+Add an **On form submission** node:
 
-| Field | Value |
-| --- | --- |
-| Form Title | `IOC Enrichment` |
-| Form Description | `Paste an IP address or file hash` |
-| Form Elements (Label) | `ioc` |
+- **Form Title**: `IOC Enrichment`
+- **Form Description**: `Paste an IP address or file hash`
+- **Form Element**: Text Input - Label `ioc`
 
 Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your input echoed back (`ioc: 8.8.8.8`).
 
 ![On form submission node]({{ "/assets/images/test form submission.png" | relative_url }})
+
 
 ## Step 2: Route with a Switch
 
@@ -76,7 +75,7 @@ Add a **Switch** node, Mode: **Rules**, then add two Routing Rules.
 - **Rename Output**: *ON*
 - Output Name: `ip`
 
-**Routing Rule 2 — file hashes**
+**Routing Rule 2 — file hashes** *(The hash regex cover MD5 (32 chars), SHA1 (40), and SHA256 (64). )*
 
 - **Value 1** (Expression): `{{ $json.ioc }}`
 - **Operator**: *String - matches regex*
@@ -84,10 +83,8 @@ Add a **Switch** node, Mode: **Rules**, then add two Routing Rules.
 - **Rename Output**: *ON*
 - **Output Name**: `hash`
 
-The hash regex cover MD5 (32 chars), SHA1 (40), and SHA256 (64). 
-
 ![Switch node]({{ "/assets/images/Switch-node.png" | relative_url }})
-<br>
+
 
 ## Step 3: The IP Path
 
