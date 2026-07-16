@@ -124,7 +124,7 @@ Installation destination: select the first NVMe drive, choose **Erase disk and i
 Always start with a full system update before installing anything else.
 
 ```bash
-sudo dnf upgrade -y
+sudo dnf update -y
 ```
 
 This may take a while on first run. Reboot after it finishes:
