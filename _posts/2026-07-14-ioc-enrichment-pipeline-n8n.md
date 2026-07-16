@@ -76,7 +76,7 @@ Add an **On form submission** node.
 
 Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your input echoed back (`ioc: 8.8.8.8`).
 
-*screenshot*
+![On form submission node]({{ "/assets/images/test form submission.png" | relative_url }})
 
 ## Step 2: Route with a Switch
 
