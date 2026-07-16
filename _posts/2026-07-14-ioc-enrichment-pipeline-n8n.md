@@ -99,8 +99,11 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
   - Query Parameter 1 *(Name=Value)*: `ipAddress` = {% raw %}`{{ $json.ioc }}`{% endraw %} *(expression)*
   - Query Parameter 1 *(Name=Value)*: `maxAgeInDays` = `90`
 - **Send Headers**: *ON*
-  - Header *(Name=Value)*: = `application/json`
+  - Header *(Name=Value)*: = `Accept` = `application/json`
 <br>
+![AbuseIPDB1 Node]({{ "/assets/images/AbuseIPDB1-Node.png" | relative_url }})
+![AbuseIPDB2 Node]({{ "/assets/images/AbuseIPDB2-Node.png" | relative_url }})
+
 
 **VirusTotal (IP)**
 
