@@ -58,8 +58,6 @@ Add an **On form submission** node:
 
 Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your input echoed back (`ioc: 8.8.8.8`).
 
-![On form submission node]({{ "/assets/images/test form submission.png" | relative_url }})
-
 
 ## Step 2: Route with a Switch
 
@@ -83,14 +81,12 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 - **Rename Output**: *ON*
 - **Output Name**: *hash*
 
-![Switch node]({{ "/assets/images/Switch-node.png" | relative_url }})
-
 
 ## Step 3: The IP Path
 
 Three HTTP Request nodes chained off the Switch's `ip` output.
 
-<u>**AbuseIPDB**</u>
+**<u>AbuseIPDB</u>**
 
 - **Method**: *GET*
 - **URL**: `https://api.abuseipdb.com/api/v2/check`
@@ -103,10 +99,7 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 <br>
 <br>
 
-![AbuseIPDB2 Node]({{ "/assets/images/AbuseIPDB2-Node.png" | relative_url }})
-
-
-<u>**VirusTotal (IP)**</u>
+**<u>VirusTotal (IP)</u>**
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
@@ -115,7 +108,7 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 > Note the `$('Switch')` reference. AbuseIPDB's response replaced the item data, so the IP has to be pulled back from the Switch node, not the previous node.
 <br>
 
-<u>**Shodan**</u>
+**<u>Shodan</u>**
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://api.shodan.io/shodan/host/{{ $('Switch').item.json.ioc }}`{% endraw %}
