@@ -75,7 +75,7 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 - **Rename Output**: *ON*
 - **Output Name**: *ip*
 
-**Routing Rule 2 — file hashes** *(The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64))*
+**Routing Rule 2 — Hashes** *(The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64))*
 
 - **Value 1** (Expression): {% raw %}`{{ $json.ioc }}`{% endraw %}
 - **Operator**: *String - matches regex*
