@@ -4,10 +4,9 @@ permalink: /about/
 layout: single
 author_profile: true
 ---
+<br>
 
 This blog documents my learning path and hands-on practice across cybersecurity, including detection engineering, pentesting, threat hunting, digital forensics, and AI-powered automation. Everything published here is based on my own hands-on experience. This blog also serves as a living reference for the configurations, decisions, and issues I've worked through.
-
----
 
 ## Who I Am
 
@@ -23,5 +22,6 @@ My technical interests include:
 - AI-powered automation and agents (n8n, agentic pipelines for threat intel and reporting)
 
 ---
+<br>
 
-📫 You can explore my work throughout the blog or connect with me via [GitHub](https://github.com/sahara7191).
+📫 **You can explore my work throughout the blog or connect with me via [GitHub](https://github.com/sahara7191).**
