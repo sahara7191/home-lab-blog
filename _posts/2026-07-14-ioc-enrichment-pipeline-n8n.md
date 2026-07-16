@@ -110,7 +110,7 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 - **Method**: *GET*
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Credentials**: *Your API for VirusTotal*
-- 
+  
 
 **<u>Shodan</u>**
 
