@@ -84,7 +84,7 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 
 ## Step 3: The IP Path
 
-Three HTTP Request nodes chained off the Switch's `ip` output.
+Three HTTP Request nodes chained off the Switch's `ip` output. 
 
 **<u>AbuseIPDB</u>**
 
@@ -103,9 +103,8 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
-- **Credential**: *VirusTotal*
-
-> Note the `$('Switch')` reference. AbuseIPDB's response replaced the item data, so the IP has to be pulled back from the Switch node, not the previous node.
+- **Credentials**: *Your API for VirusTotal*
+<br>
 <br>
 
 **<u>Shodan</u>**
@@ -115,6 +114,7 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 - **Authentication**: *Generic Credential Type - Query Auth* (Name: `key`, lowercase)
 
 > Shodan's parameter name is case-sensitive. `Key` instead of `key` returns 401 Unauthorized with a misleading "check your credentials" message even though the key is fine.
+
 
 ## Step 4: Correlate the IP Results
 
