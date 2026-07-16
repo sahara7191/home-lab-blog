@@ -69,20 +69,20 @@ Add a **Switch** node, Mode: **Rules**, then add two Routing Rules.
 
 **Routing Rule 1 — IP addresses**
 
-- **Value 1** (Expression): ```{{ $json.ioc }}```
+- **Value 1** (Expression): *{{ $json.ioc }}*
 - **Operator**: *String - matches regex*
 - **Value 2** (Fixed): `^(\d{1,3}\.){3}\d{1,3}$`
 - **Rename Output**: *ON*
-- Output Name: `ip`
+- Output Name: *ip*
 <br>
 
-**Routing Rule 2 — file hashes** *(The hash regex cover MD5 (32 chars), SHA1 (40), and SHA256 (64))*
+**Routing Rule 2 — file hashes** *(The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64))*
 
-- **Value 1** (Expression): ```{{ $json.ioc }}```
+- **Value 1** (Expression): *{{ $json.ioc }}*
 - **Operator**: *String - matches regex*
 - **Value 2** (Fixed): `^[a-fA-F0-9]{32}$|^[a-fA-F0-9]{40}$|^[a-fA-F0-9]{64}$`
 - **Rename Output**: *ON*
-- **Output Name**: `hash`
+- **Output Name**: *hash*
 
 ![Switch node]({{ "/assets/images/Switch-node.png" | relative_url }})
 
