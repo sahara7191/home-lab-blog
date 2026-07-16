@@ -24,4 +24,4 @@ My technical interests include:
 ---
 <br>
 
-📫 **You can explore my work throughout the blog or connect with me via [GitHub](https://github.com/sahara7191).**
+📫 *You can explore my work throughout the blog or connect with me via [GitHub](https://github.com/sahara7191).*
