@@ -65,7 +65,7 @@ Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your
 
 The pipeline routes IPs and hashes to different endpoints. A **Switch** node with regex does the detection and routing in one node.
 
-Add a **Switch** node, Mode: **Rules**, then add two Routing Rules.
+Add a **Switch** node and set parameters in Mode **Rules**:
 
 **Routing Rule 1 — IP addresses**
 
@@ -74,7 +74,6 @@ Add a **Switch** node, Mode: **Rules**, then add two Routing Rules.
 - **Value 2** (Fixed): `^(\d{1,3}\.){3}\d{1,3}$`
 - **Rename Output**: *ON*
 - **Output Name**: *ip*
-<br>
 
 **Routing Rule 2 — file hashes** *(The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64))*
 
