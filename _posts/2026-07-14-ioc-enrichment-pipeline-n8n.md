@@ -27,7 +27,7 @@ This post builds a simple n8n pipeline that automates the loop: paste an indicat
 
 Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blog/homelab/fedora-ai-setup-part1/) (OS and ROCm), [Part 2](/home-lab-blog/homelab/fedora-ai-setup-part2/) (Ollama, Open WebUI, n8n).
 
-## Overview
+## Workflow Overview
 
 ![IOC Workflow]({{ "/assets/images/IOC-Workflow.png" | relative_url }})
 
@@ -66,27 +66,23 @@ Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your
 
 The pipeline routes IPs and hashes to different endpoints. A **Switch** node with regex does the detection and routing in one node.
 
-Add a **Switch** node, Mode: **Rules**. Add two Routing Rules.
+Add a **Switch** node, Mode: **Rules**, then add two Routing Rules.
 
-**Routing Rule 1**
+**Routing Rule 1 — IP addresses**
 
-| Field | Setting |
-| --- | --- |
-| Value 1 (Expression) | `{{ $json.ioc }}` |
-| Operator | String, matches regex |
-| Value 2 (Fixed) | `^(\d{1,3}\.){3}\d{1,3}$` |
-| Rename Output | ON |
-| Output Name | `ip` |
+- Value 1 (Expression): `{{ $json.ioc }}`
+- Operator: String, matches regex
+- Value 2 (the pattern): `^(\d{1,3}\.){3}\d{1,3}$`
+- Rename Output: ON
+- Output Name: `ip`
 
-**Routing Rule 2**
+**Routing Rule 2 — file hashes**
 
-| Field | Setting |
-| --- | --- |
-| Value 1 (Expression) | `{{ $json.ioc }}` |
-| Operator | String, matches regex |
-| Value 2 (Fixed) | `^[a-fA-F0-9]{32}$\|^[a-fA-F0-9]{40}$\|^[a-fA-F0-9]{64}$` |
-| Rename Output | ON |
-| Output Name | `hash` |
+- Value 1 (Expression): `{{ $json.ioc }}`
+- Operator: String, matches regex
+- Value 2 (the pattern): `^[a-fA-F0-9]{32}$|^[a-fA-F0-9]{40}$|^[a-fA-F0-9]{64}$`
+- Rename Output: ON
+- Output Name: `hash`
 
 The hash alternations cover MD5 (32 chars), SHA1 (40), and SHA256 (64). Renaming the outputs to `ip` and `hash` makes the canvas self-documenting instead of `Output 0` and `Output 1`.
 
