@@ -85,12 +85,13 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 - **Output Name**: *hash*
 
 *The hash regex cover MD5 (32), SHA1 (40), and SHA256 (64)*
-<br>
+
 <br>
 
 ## Step 3: The IP Path
 
 Three HTTP Request nodes chained off the Switch's `ip` output. 
+
 
 **<u>AbuseIPDB</u>**
 
@@ -102,22 +103,21 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
   - Query Parameter 1 *(Name=Value)*: `maxAgeInDays` = `90`
 - **Send Headers**: *ON*
   - Header *(Name=Value)*: = `Accept` = `application/json`
-<br>
-<br>
+
 
 **<u>VirusTotal (IP)</u>**
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Credentials**: *Your API for VirusTotal*
-<br>
-<br>
+- 
 
 **<u>Shodan</u>**
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://api.shodan.io/shodan/host/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Authentication**: *Generic Credential Type - Query Auth* (Name: `key`, lowercase)
+
 
 > Shodan's parameter name is case-sensitive. `Key` instead of `key` returns 401 Unauthorized with a misleading "check your credentials" message even though the key is fine.
 <br>
