@@ -96,10 +96,10 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 - **URL**: `https://api.abuseipdb.com/api/v2/check`
 - **Authentication**: *Generic Credential Type - Header Auth* (Name: `Key`)
 - **Send Query Parameters**: *ON*
-  - `ipAddress` = {% raw %}`{{ $json.ioc }}`{% endraw %}
-  - `maxAgeInDays` = `90`
+  - Query Parameter 1 *(Name=Value)*: `ipAddress` = {% raw %}`{{ $json.ioc }}`{% endraw %} *(expression)*
+  - Query Parameter 1 *(Name=Value)*: `maxAgeInDays` = `90`
 - **Send Headers**: *ON*
-  - `Accept` = `application/json`
+  - Header *(Name=Value)*: = `application/json`
 <br>
 
 **VirusTotal (IP)**
