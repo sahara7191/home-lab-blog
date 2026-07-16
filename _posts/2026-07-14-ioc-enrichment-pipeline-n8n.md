@@ -53,11 +53,11 @@ Submission Form (paste an IP or file hash)
 
 Free API keys from sources:
 
-| Source | Provides | Link | Free tier |
+| Source | Provides | Link | 
 | --- | --- | --- | --- |
-| AbuseIPDB | Reputation data | [abuseipdb.com](https://www.abuseipdb.com), Account then API | 1,000 checks/day |
-| VirusTotal | Vendor detection | [virustotal.com](https://www.virustotal.com), profile then API Key | 4 req/min, 500/day |
-| Shodan | Port and service exposure | [shodan.io](https://www.shodan.io), account page | key on account page |
+| AbuseIPDB | Reputation data (abuse confidence score) | [abuseipdb.com](https://www.abuseipdb.com) | 
+| VirusTotal | Vendor detection (flags across ~90 engines) | [virustotal.com](https://www.virustotal.com) | 
+| Shodan | Port and service exposure | [shodan.io](https://www.shodan.io) |
 
 One source alone is easy to misread. Together they let the model weigh agreement and conflict between signals before committing to a verdict.
 
@@ -72,11 +72,11 @@ Add an **On form submission** node.
 | --- | --- |
 | Form Title | `IOC Enrichment` |
 | Form Description | `Paste an IP address or file hash` |
-| Form Element | Text Input, labeled `ioc` |
+| Form Elements (Label) | `ioc` |
 
 Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your input echoed back (`ioc: 8.8.8.8`).
 
-> The browser response (showing the verdict after submission) is handled at the *end* of the workflow by a Form Ending node in Step 7. My n8n version has no "Respond When" setting on the trigger, so there is nothing to configure here.
+*screenshot*
 
 ## Step 2: Route with a Switch
 
