@@ -23,11 +23,11 @@ toc: true
 
 Using n8n for Indicator of Compromise (IOC) enrichment allows you to build powerful, automated threat intelligence pipelines. Instead of analysts manually querying multiple sources, such as  VirusTotal, AbuseIPDB, Shodan, etc., n8n automatically queries intelligence platforms to determine if an IP, domain, hash, or URL is malicious.
 
-This post builds an n8n pipeline that automates the loop: paste an indicator, it queries threat intel sources, correlates them, and has a local LLM write a plain-language verdict. 
+This post builds a simple n8n pipeline that automates the loop: paste an indicator, it queries threat intel sources, correlates them, and has a local LLM write a plain-language verdict. 
 
 Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blog/homelab/fedora-ai-setup-part1/) (OS and ROCm), [Part 2](/home-lab-blog/homelab/fedora-ai-setup-part2/) (Ollama, Open WebUI, n8n).
 
-## What it does
+## Overview
 
 ```
 Submission Form (paste an IP or file hash)
@@ -48,29 +48,21 @@ Submission Form (paste an IP or file hash)
 
 ```
 
-Three sources, each answering a different question:
-
-| Source | Question it answers |
-| --- | --- |
-| AbuseIPDB | Has this IP been reported for abuse? (reputation) |
-| VirusTotal | Do security vendors flag it? (detections) |
-| Shodan | What is this host actually running? (exposure) |
-
-The local model reads all three and writes the verdict. That step turns raw data into something an analyst can act on.
 
 ## Prerequisites
 
-Three free API keys:
+Free API keys from sources:
 
-| Service | Where | Free tier |
-| --- | --- | --- |
-| VirusTotal | [virustotal.com](https://www.virustotal.com), profile then API Key | 4 req/min, 500/day |
-| AbuseIPDB | [abuseipdb.com](https://www.abuseipdb.com), Account then API | 1,000 checks/day |
-| Shodan | [shodan.io](https://www.shodan.io), account page | key on account page |
+| Source | Provides | Link | Free tier |
+| --- | --- | --- | --- |
+| AbuseIPDB | Reputation data | [abuseipdb.com](https://www.abuseipdb.com), Account then API | 1,000 checks/day |
+| VirusTotal | Vendor detection | [virustotal.com](https://www.virustotal.com), profile then API Key | 4 req/min, 500/day |
+| Shodan | Port and service exposure | [shodan.io](https://www.shodan.io), account page | key on account page |
+
+One source alone is easy to misread. Together they let the model weigh agreement and conflict between signals before committing to a verdict.
 
 Plus a self-hosted n8n instance and Ollama with a capable model. I use `qwen3.6:35b`.
 
-> **Set all three keys up as n8n credentials before you take any screenshots.** In node parameters they show as plain text and leak into images. As credentials they are encrypted and render as hidden. I learned this the hard way (see the end).
 
 ## Step 1: The Form Trigger
 
