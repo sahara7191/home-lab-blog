@@ -48,6 +48,8 @@ Submission Form (paste an IP or file hash)
 
 ```
 
+![IOC Workflow]({{ "/assets/images/IOC-Workflow.png" | relative_url }})
+
 
 ## Prerequisites
 
@@ -82,16 +84,31 @@ Execute the step, open the Test URL, and submit `8.8.8.8`. The output shows your
 
 The pipeline routes IPs and hashes to different endpoints. A **Switch** node with regex does the detection and routing in one node.
 
-Add a **Switch** node, Mode: Rules.
+Add a **Switch** node, Mode: **Rules**. Add two Routing Rules.
 
-| Output name | Condition | Pattern |
-| --- | --- | --- |
-| `ip` | String, matches regex | `^(\d{1,3}\.){3}\d{1,3}$` |
-| `hash` | String, matches regex | `^[a-fA-F0-9]{32}$\|^[a-fA-F0-9]{40}$\|^[a-fA-F0-9]{64}$` |
+**Routing Rule 1**
 
-Set each rule's Value to `{{ $json.ioc }}`. The three hash alternations cover MD5 (32), SHA1 (40), and SHA256 (64). Rename the outputs to `ip` and `hash` so the canvas is self-documenting.
+| Field | Setting |
+| --- | --- |
+| Value 1 (Expression) | `{{ $json.ioc }}` |
+| Operator | String, matches regex |
+| Value 2 (Fixed) | `^(\d{1,3}\.){3}\d{1,3}$` |
+| Rename Output | ON |
+| Output Name | `ip` |
 
-> I first tried routing on a `type` field with the String "is equal to" condition. Input correct, expression preview correct, output empty. Never resolved it. Regex matching worked immediately.
+**Routing Rule 2**
+
+| Field | Setting |
+| --- | --- |
+| Value 1 (Expression) | `{{ $json.ioc }}` |
+| Operator | String, matches regex |
+| Value 2 (Fixed) | `^[a-fA-F0-9]{32}$\|^[a-fA-F0-9]{40}$\|^[a-fA-F0-9]{64}$` |
+| Rename Output | ON |
+| Output Name | `hash` |
+
+The hash alternations cover MD5 (32 chars), SHA1 (40), and SHA256 (64). Renaming the outputs to `ip` and `hash` makes the canvas self-documenting instead of `Output 0` and `Output 1`.
+
+![Switch node]({{ "/assets/images/Switch-node.png" | relative_url }})
 
 ## Step 3: The IP Path
 
