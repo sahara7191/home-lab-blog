@@ -92,28 +92,30 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 
 **AbuseIPDB**
 
-| Setting | Value |
-| --- | --- |
-| Method / URL | GET, `https://api.abuseipdb.com/api/v2/check` |
-| Auth | Generic, Header Auth (Name: `Key`) |
-| Query Params | `ipAddress` = `{{ $json.ioc }}`, `maxAgeInDays` = `90` |
-| Headers | `Accept` = `application/json` |
+- **Method**: *GET*
+- **URL**: `https://api.abuseipdb.com/api/v2/check`
+- **Authentication**: *Generic Credential Type - Header Auth* (Name: `Key`)
+- **Send Query Parameters**: *ON*
+  - `ipAddress` = {% raw %}`{{ $json.ioc }}`{% endraw %}
+  - `maxAgeInDays` = `90`
+- **Send Headers**: *ON*
+  - `Accept` = `application/json`
+<br>
 
 **VirusTotal (IP)**
 
-| Setting | Value |
-| --- | --- |
-| Method / URL | GET, `https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}` |
-| Credential | VirusTotal |
+- **Method**: *GET*
+- **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
+- **Credential**: *VirusTotal*
 
 > Note the `$('Switch')` reference. AbuseIPDB's response replaced the item data, so the IP has to be pulled back from the Switch node, not the previous node.
+<br>
 
 **Shodan**
 
-| Setting | Value |
-| --- | --- |
-| Method / URL | GET, `https://api.shodan.io/shodan/host/{{ $('Switch').item.json.ioc }}` |
-| Auth | Generic, Query Auth (Name: `key`, lowercase) |
+- **Method**: *GET*
+- **URL**: {% raw %}`https://api.shodan.io/shodan/host/{{ $('Switch').item.json.ioc }}`{% endraw %}
+- **Authentication**: *Generic Credential Type - Query Auth* (Name: `key`, lowercase)
 
 > Shodan's parameter name is case-sensitive. `Key` instead of `key` returns 401 Unauthorized with a misleading "check your credentials" message even though the key is fine.
 
@@ -176,11 +178,11 @@ Hashes only work with VirusTotal, so this branch is shorter.
 
 **VirusTotal (file)**
 
-| Setting | Value |
-| --- | --- |
-| Method / URL | GET, `https://www.virustotal.com/api/v3/files/{{ $('Switch').item.json.ioc }}` |
-| Credential | VirusTotal |
-| Send Query Params | **OFF** (the hash is in the URL path) |
+- **Method**: *GET*
+- **URL**: {% raw %}`https://www.virustotal.com/api/v3/files/{{ $('Switch').item.json.ioc }}`{% endraw %}
+- **Credential**: *VirusTotal*
+- **Send Query Parameters**: *OFF* (the hash is in the URL path)
+<br>
 
 **Hash Summary** — a Code node that mirrors IP merge. Early on I fed the model only detection counts and file size, and verdicts were correct but thin ("57 engines flagged it"). This version pulls the malware family label, threat categories, tags, and first-seen date too, which turns a detection count into actual intelligence.
 
@@ -244,20 +246,16 @@ Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP me
 
 Basic LLM Chain settings:
 
-| Setting | Value |
-| --- | --- |
-| Source for Prompt | Define below |
-| Prompt | `{{ $json.prompt }}` |
-| Chat Messages | **leave empty** |
+- **Source for Prompt**: *Define below*
+- **Prompt**: {% raw %}`{{ $json.prompt }}`{% endraw %}
+- **Chat Messages**: *leave empty*
 
 > **Leave Chat Messages empty.** My earlier build had a System message reading "Write in plain text without markdown formatting." Once I switched to a markdown display (Step 7), that message fought the branch prompts: they asked for markdown, it forbade markdown, and the model produced malformed output with no verdict heading to style. Deleting it fixed everything. When two instructions reach the model, they have to agree.
 
 On the **Ollama Chat Model** node, add these options:
 
-| Option | Value | Why |
-| --- | --- | --- |
-| Sampling Temperature | `0` | Same input gives same output. A verdict tool must be deterministic. |
-| Enable Thinking | off | `qwen3.6` reasons before answering; not needed for a rubric, and faster off. |
+- **Sampling Temperature**: `0`. Same input gives the same output, which a verdict tool needs.
+- **Enable Thinking**: *off*. `qwen3.6` reasons before answering, which a rubric does not need, and it runs faster off.
 
 > **Do not cap "Max Tokens to Generate" on a thinking model.** The cap counts hidden reasoning tokens too, so a limit of 400 gets eaten by the thinking phase and leaves a gutted verdict with no explanation. Leave it at -1, or turn thinking off first. Temperature 0 plus the strict format keeps length under control anyway.
 
@@ -269,11 +267,10 @@ A raw text dump is hard to read; an analyst wants red or green at a glance. Thre
 
 **Markdown node** (after Basic LLM Chain)
 
-| Setting | Value |
-| --- | --- |
-| Mode | Markdown to HTML |
-| Markdown | `{{ $json.text }}` |
-| Destination Key | `data` |
+- **Mode**: *Markdown to HTML*
+- **Markdown**: {% raw %}`{{ $json.text }}`{% endraw %}
+- **Destination Key**: `data`
+<br>
 
 **Style Verdict** — a Code node that tags the verdict heading with a CSS class. n8n's Markdown converter adds an `id` to headings, so this matches with a regex that tolerates attributes.
 
@@ -289,6 +286,7 @@ return { json: { data: html } };
 
 **Form Ending node** — set Operation to **Show Text**, and paste this in the Text field (expression mode). The CSS colours the banner, with a grey fallback if the class ever fails to attach.
 
+{% raw %}
 ```html
 <style>
   .verdict-wrap { font-family: system-ui, sans-serif; max-width: 700px;
@@ -305,6 +303,7 @@ return { json: { data: html } };
   {{ $json.data }}
 </div>
 ```
+{% endraw %}
 
 Final chain: **Basic LLM Chain → Markdown → Style Verdict → Form Ending.** Submit an indicator and the styled verdict renders in the browser: green for clean, amber for suspicious, red for malicious.
 
