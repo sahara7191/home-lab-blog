@@ -21,26 +21,31 @@ toc: true
 ---
 <br>
 
-IOC enrichment eats an analyst's day. You get an IP or a file hash, then open VirusTotal in one tab, AbuseIPDB in another, Shodan in a third, and copy-paste between them to form a judgment. Repeat fifty times in an investigation and it stops being analysis and becomes data entry.
+Using n8n for Indicator of Compromise (IOC) enrichment allows you to build powerful, automated threat intelligence pipelines. Instead of analysts manually querying multiple sources, such as  VirusTotal, AbuseIPDB, Shodan, etc., n8n automatically queries intelligence platforms to determine if an IP, domain, hash, or URL is malicious.
 
-This post builds an n8n pipeline that automates the loop: paste an indicator, it queries three threat intel sources, correlates them, and has a local LLM write a plain-language verdict. Everything runs on my own hardware except the three reputation lookups.
+This post builds an n8n pipeline that automates the loop: paste an indicator, it queries threat intel sources, correlates them, and has a local LLM write a plain-language verdict. 
 
 Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blog/homelab/fedora-ai-setup-part1/) (OS and ROCm), [Part 2](/home-lab-blog/homelab/fedora-ai-setup-part2/) (Ollama, Open WebUI, n8n).
 
 ## What it does
 
 ```
-Form (paste an IP or file hash)
-        |
-     Switch (regex routing)
-        |-- ip   --> AbuseIPDB --> VirusTotal --> Shodan --> IP merge ---+
-        |-- hash --> VirusTotal (file) --> Hash Summary ----------------+
-                                                                         |
-                                                        Basic LLM Chain (Ollama)
-                                                                         |
-                                                        Markdown --> Style Verdict
-                                                                         |
-                                                    Styled verdict shown on form
+Submission Form (paste an IP or file hash)
+           |
+         Switch
+        /      \ 
+      hash     ip -> AbuseIPDB -> VirusTotal -> Shodan -> IP merge
+      |                                                   |
+      --> VirusTotal --> Hash Summary --------> | <--------
+                                                |
+                                         Basic LLM Chain (Ollama)
+                                                |    
+                                             Markdown
+                                                |
+                                           Style Verdict
+                                                |
+                                           Complete Form
+
 ```
 
 Three sources, each answering a different question:
