@@ -29,41 +29,23 @@ Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blo
 
 ## Overview
 
-```
-Submission Form (paste an IP or file hash)
-           |
-         Switch
-        /      \ 
-      hash     ip -> AbuseIPDB -> VirusTotal -> Shodan -> IP merge
-      |                                                   |
-      --> VirusTotal --> Hash Summary --------> | <--------
-                                                |
-                                         Basic LLM Chain (Ollama)
-                                                |    
-                                             Markdown
-                                                |
-                                           Style Verdict
-                                                |
-                                           Complete Form
-
-```
-
 ![IOC Workflow]({{ "/assets/images/IOC-Workflow.png" | relative_url }})
 
 
 ## Prerequisites
 
-Free API keys from sources:
+- A self-hosted n8n instance and Ollama with a capable model. I use `qwen3.6:35b`.
+
+- API keys from sources:
 
 | Source | Provides | Link | 
-| --- | --- | --- | --- |
+| --- | --- | --- | 
 | AbuseIPDB | Reputation data (abuse confidence score) | [abuseipdb.com](https://www.abuseipdb.com) | 
 | VirusTotal | Vendor detection (flags across ~90 engines) | [virustotal.com](https://www.virustotal.com) | 
 | Shodan | Port and service exposure | [shodan.io](https://www.shodan.io) |
 
 One source alone is easy to misread. Together they let the model weigh agreement and conflict between signals before committing to a verdict.
-
-Plus a self-hosted n8n instance and Ollama with a capable model. I use `qwen3.6:35b`.
+<br>
 
 
 ## Step 1: The Form Trigger
