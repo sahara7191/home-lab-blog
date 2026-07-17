@@ -125,7 +125,7 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 
 ## Step 4: Correlate the IP Results
 
-Add the **Code** node for JavaScript after Shodan (I renamed mine to ***IP merge***). It pulls the useful fields from all three responses and builds the prompt.
+Add a **Code** node for JavaScript after Shodan (I renamed mine to ***IP merge***). It pulls the useful fields from all three responses and builds the prompt.
 
 ```javascript
 const abuse = $('AbuseIPDB').item.json.data;
@@ -243,7 +243,7 @@ Last analyzed: ${summary.lastSeen}`;
 return [{ json: summary }];
 ```
 
-> Early on I fed the model only detection counts and file size, and verdicts were correct but thin ("57 engines flagged it"). This version pulls the malware family label, threat categories, tags, and first-seen date too, which turns a detection count into actual intelligence.
+> Early on I fed the model only detection counts and file size, and verdicts were correct but thin ("57 engines flagged it"). This version pulls the malware family label, threat categories, tags, and first-seen date.
 
 <br>
 
@@ -255,18 +255,20 @@ Basic LLM Chain settings:
 
 - **Source for Prompt**: *Define below*
 - **Prompt**: {% raw %}`{{ $json.prompt }}`{% endraw %}
-- **Chat Messages**: *leave empty*
+- **Chat Messages**: *(leave empty)*
 
-> **Leave Chat Messages empty.** My earlier build had a System message reading "Write in plain text without markdown formatting." Once I switched to a markdown display (Step 7), that message fought the branch prompts: they asked for markdown, it forbade markdown, and the model produced malformed output with no verdict heading to style. Deleting it fixed everything. When two instructions reach the model, they have to agree.
+> **Leave Chat Messages empty.** My earlier build had a System message reading "Write in plain text without markdown formatting." Once I switched to a markdown display (Step 7), that message fought the branch prompts: they asked for markdown, it forbade markdown, and the model produced malformed output with no verdict heading to style. Deleting message from this node fixed everything. 
 
 On the **Ollama Chat Model** node, add these options:
 
-- **Sampling Temperature**: `0`. Same input gives the same output, which a verdict tool needs.
-- **Enable Thinking**: *off*. `qwen3.6` reasons before answering, which a rubric does not need, and it runs faster off.
+- **Sampling Temperature**: `0` *(Same input gives the same output)*
+- **Enable Thinking**: *off*.  *(`qwen3.6` reasons before answering, which a rubric does not need, and it runs faster off)*
 
 > **Do not cap "Max Tokens to Generate" on a thinking model.** The cap counts hidden reasoning tokens too, so a limit of 400 gets eaten by the thinking phase and leaves a gutted verdict with no explanation. Leave it at -1, or turn thinking off first. Temperature 0 plus the strict format keeps length under control anyway.
 
-> **Connecting n8n to Ollama:** n8n runs in Docker, so `localhost` is the container, not the host. Use the host LAN IP: `hostname -I | awk '{print $1}'`, then set the Ollama credential base URL to `http://YOUR_IP:11434`. `host.docker.internal` does not work on Linux.
+> **Connecting n8n to Ollama:** n8n runs in Docker, so `localhost` is the container, not the host. Use the host IP: `hostname -I | awk '{print $1}'`, then set the Ollama credential base URL to `http://YOUR_IP:11434`. 
+
+<br>
 
 ## Step 7: Style the Verdict on the Form
 
