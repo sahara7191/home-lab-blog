@@ -370,5 +370,3 @@ Atomic Red Team fires an ATT&CK technique
 ​```
 
 Simulate, detect, enrich, respond. No indicator typed by hand anywhere in the chain.
-
-**A side experiment: a security-specialized model.** I run `qwen3.6:35b`, a general model. Cisco's Foundation-Sec is a Llama-3.1-8B continued-pretrained on security data (the base model is not instruction-tuned, so a drop-in verdict node needs an instruct variant). Worth testing whether a small security-tuned model matches a larger general one on these verdicts. Skip the "uncensored" or "blackhat" models: they are usually old base models with safety training stripped, which degrades instruction-following, and running unknown model files on a lab network is its own risk. Defensive enrichment is not something mainstream models refuse anyway.
