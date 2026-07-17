@@ -1,5 +1,5 @@
 ---
-title: "Building an IOC Enrichment Pipeline with n8n and a Local LLM"
+title: "Building an IOC Enrichment Pipeline with n8n and a Local LLM (Part1)"
 date: 2026-07-12
 categories:
   - homelab
@@ -74,7 +74,7 @@ Add a **Switch** node and set parameters in Mode **Rules**:
 - **Value 2** (Fixed): `^(\d{1,3}\.){3}\d{1,3}$`
 - **Rename Output**: *ON*
 - **Output Name**: *ip*
-
+<br>
 
 **<u>Routing Rule 2 — Hashes</u>** 
 
@@ -103,14 +103,14 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
   - Query Parameter 1 *(Name=Value)*: `maxAgeInDays` = `90`
 - **Send Headers**: *ON*
   - Header *(Name=Value)*: = `Accept` = `application/json`
+<br>
 
-
-**<u>VirusTotal (IP)</u>**
+**<u>VirusTotal (VT-IP)</u>**
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Credentials**: *Your API for VirusTotal*
-  
+<br> 
 
 **<u>Shodan</u>**
 
@@ -120,11 +120,12 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 
 
 > Shodan's parameter name is case-sensitive. `Key` instead of `key` returns 401 Unauthorized with a misleading "check your credentials" message even though the key is fine.
+
 <br>
 
 ## Step 4: Correlate the IP Results
 
-Add a **Code** node after Shodan (I renamed mine to ***IP merge***). It pulls the useful fields from all three responses and builds the prompt.
+Add the **Code** node for JavaScript after Shodan (I renamed mine to ***IP merge***). It pulls the useful fields from all three responses and builds the prompt.
 
 ```javascript
 const abuse = $('AbuseIPDB').item.json.data;
@@ -169,25 +170,26 @@ Open Ports (Shodan): ${summary.shodanPorts.join(', ') || 'none found'}`;
 return [{ json: summary }];
 ```
 
-Building the prompt here (not in the LLM node) lets each branch supply its own prompt while one LLM node serves both. Two things in this prompt took several rewrites to get right:
+Building the prompt here (not in the LLM node) lets each branch supply its own prompt while one LLM node serves both. A few things in this prompt took several rewrites to get right:
 
-> **Give the model a rubric, not an opinion.** My first prompt just asked for "a verdict on whether this IP is safe, suspicious, or malicious." Running the same IP twice gave MALICIOUS one time and SUSPICIOUS the next. The "Verdict criteria" block fixes that: the model applies thresholds I chose instead of deciding for itself. Those thresholds are the part worth tuning to your own environment.
+> **Give the model a precise instruction, not an opinion.** My first prompt just asked for "a verdict on whether this IP is safe, suspicious, or malicious." Running the same IP twice resulted in a verdict of MALICIOUS one time and SUSPICIOUS the next. The "Verdict criteria" block fixes that: the model applies thresholds I chose instead of deciding for itself.
 
-> **Format by example.** Describing the format in words ("be concise, use markdown") barely worked. Showing the exact skeleton plus hard counts ("4 to 6 bullets, under 15 words") is what made local models comply. Also: my original prompt ended with a lone `Verdict:` line, which invited prose instead of a `## Verdict:` heading. Deleting that line was half the fix.
+> **Format by example.** Describing the format in words ("be concise, use markdown") barely worked. Showing the exact skeleton plus strict counts ("4 to 6 bullets, under 15 words") is what made local models comply. Moreover, my original prompt ended with a simple "Verdict:" line, which invited prose instead of a ## Verdict: heading. Deleting that line was half the fix.
+
+<br>
 
 ## Step 5: The Hash Path
 
-Hashes only work with VirusTotal, so this branch is shorter.
+Hashes I connected only VirusTotal, so this branch is shorter.
 
-**VirusTotal (file)**
+**<u>VirusTotal (VT-Hash)</u>**
 
 - **Method**: *GET*
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/files/{{ $('Switch').item.json.ioc }}`{% endraw %}
-- **Credential**: *VirusTotal*
-- **Send Query Parameters**: *OFF* (the hash is in the URL path)
+- **Credential**: *Your API for VirusTotal*
 <br>
 
-**Hash Summary** — a Code node that mirrors IP merge. Early on I fed the model only detection counts and file size, and verdicts were correct but thin ("57 engines flagged it"). This version pulls the malware family label, threat categories, tags, and first-seen date too, which turns a detection count into actual intelligence.
+**<u>Hash Summary</u>** — a Code node that mirrors IP merge. 
 
 ```javascript
 const vt = $('VT-Hash').item.json.data.attributes;
@@ -241,7 +243,9 @@ Last analyzed: ${summary.lastSeen}`;
 return [{ json: summary }];
 ```
 
-> The EICAR exception in the criteria matters. Without it, "10 or more detections is MALICIOUS" would flag the standard antivirus test file as a critical threat, exactly the naive behavior the rubric is meant to prevent.
+> Early on I fed the model only detection counts and file size, and verdicts were correct but thin ("57 engines flagged it"). This version pulls the malware family label, threat categories, tags, and first-seen date too, which turns a detection count into actual intelligence.
+
+<br>
 
 ## Step 6: The Local LLM Verdict
 
@@ -322,7 +326,7 @@ Three cases, each probing a different behavior. Space tests a minute apart to re
 
 The EICAR case is the one that convinced me this was worth building: the criteria carve out known test files, so the tool understands *why* it is flagged rather than pattern-matching on a number.
 
-## Things That Bit Me
+## Problems I Ran Into
 
 | Symptom | Cause | Fix |
 | --- | --- | --- |
@@ -333,7 +337,7 @@ The EICAR case is the one that convinced me this was worth building: the criteri
 | Code node errors on `.attributes` | Rate-limited API returned an error object, no `data` field | Wait out the 4/min limit |
 | Invisible white-on-white heading | Style regex matched bare `<h2>`, missed the `id` attribute | Match with attributes |
 
-## Why This Matters for DFIR
+## Conclusion
 
 This is not a forensics tool. It does not carve disks or parse memory. It automates the *glue* around forensics: enrichment, correlation, documentation, where a lot of investigation time actually goes.
 
@@ -345,11 +349,15 @@ And because the verdict step runs on a local model, no indicator data ever leave
 
 ## What's Next
 
-**A security-specialized model.** I run `qwen3.6:35b`, a general model. Cisco's Foundation-Sec is a Llama-3.1-8B continued-pretrained on security data. The plain base model is not instruction-tuned, so a drop-in verdict node needs an instruct or reasoning variant. Worth a future test: does a small security-tuned model match a larger general one here? (Skip the "uncensored" or "blackhat" models. They are usually old base models with safety training stripped, which degrades instruction-following, and running unknown model files on a lab network is its own risk. Defensive enrichment is not something mainstream models refuse anyway.)
+This pipeline is Part 1 of a series. The roadmap:
 
-**Stop typing indicators by hand.** I have an Ubuntu VM running Atomic Red Team and a Wazuh deployment in the lab, which suggests a full purple-team loop:
+**Part 2: URL and domain branches.** Two new indicator types on the same pattern: a new Switch rule, new HTTP requests, a new merge node, and the same LLM chain. Domains get VirusTotal's domain lookup plus registration age (a domain registered last week is a signal on its own). URLs bring a nice API quirk: VirusTotal requires the URL base64-encoded into a lookup ID, so that branch needs a small Code node before the HTTP request. Both branches also gain new free intel sources, urlscan.io for page behavior and AlienVault OTX for community threat intel.
 
-```
+**Part 3: Phishing email triage.** The bigger jump: upload an `.eml` file instead of typing an indicator, parse out the sender IP, embedded links, and attachment hashes, then feed each extracted IOC through the existing branches. That turns the pipeline from a lookup tool into a triage tool, and forces solving multi-IOC handling against VirusTotal's 4 requests/minute limit (Loop Over Items with waits).
+
+**The finale: a purple-team loop.** I have an Ubuntu VM running Atomic Red Team and a Wazuh deployment in the lab:
+
+​```
 Atomic Red Team fires an ATT&CK technique
         |
    Wazuh detects it and generates an alert
@@ -359,6 +367,8 @@ Atomic Red Team fires an ATT&CK technique
    This enrichment pipeline runs on the IOCs in the alert
         |
    Enriched verdict lands in my notifications
-```
+​```
 
-Simulate, detect, enrich, respond. That is the next project.
+Simulate, detect, enrich, respond. No indicator typed by hand anywhere in the chain.
+
+**A side experiment: a security-specialized model.** I run `qwen3.6:35b`, a general model. Cisco's Foundation-Sec is a Llama-3.1-8B continued-pretrained on security data (the base model is not instruction-tuned, so a drop-in verdict node needs an instruct variant). Worth testing whether a small security-tuned model matches a larger general one on these verdicts. Skip the "uncensored" or "blackhat" models: they are usually old base models with safety training stripped, which degrades instruction-following, and running unknown model files on a lab network is its own risk. Defensive enrichment is not something mainstream models refuse anyway.
