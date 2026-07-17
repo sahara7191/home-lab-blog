@@ -95,7 +95,7 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 
 **<u>AbuseIPDB</u>**
 
-- **Method**: *GET*
+- **Method**: `GET`
 - **URL**: `https://api.abuseipdb.com/api/v2/check`
 - **Authentication**: *Generic Credential Type - Header Auth* (Name: `Key`)
 - **Send Query Parameters**: *ON*
@@ -107,14 +107,14 @@ Three HTTP Request nodes chained off the Switch's `ip` output.
 
 **<u>VirusTotal (VT-IP)</u>**
 
-- **Method**: *GET*
+- **Method**: `GET`
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/ip_addresses/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Credentials**: *Your API for VirusTotal*
 <br> 
 
 **<u>Shodan</u>**
 
-- **Method**: *GET*
+- **Method**: `GET`
 - **URL**: {% raw %}`https://api.shodan.io/shodan/host/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Authentication**: *Generic Credential Type - Query Auth* (Name: `key`, lowercase)
 
@@ -184,7 +184,7 @@ Hashes I connected only VirusTotal, so this branch is shorter.
 
 **<u>VirusTotal (VT-Hash)</u>**
 
-- **Method**: *GET*
+- **Method**: `GET`
 - **URL**: {% raw %}`https://www.virustotal.com/api/v3/files/{{ $('Switch').item.json.ioc }}`{% endraw %}
 - **Credential**: *Your API for VirusTotal*
 <br>
@@ -251,15 +251,15 @@ return [{ json: summary }];
 
 Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP merge` and `Hash Summary` to its input, and connect an **Ollama Chat Model** to its Model input (`qwen3.6:35b`).
 
-Basic LLM Chain settings:
+**<u>Basic LLM Chain</u>**:
 
-- **Source for Prompt**: *Define below*
+- **Source for Prompt**: `Define below`
 - **Prompt**: {% raw %}`{{ $json.prompt }}`{% endraw %}
 - **Chat Messages**: *(leave empty)*
 
 > **Leave Chat Messages empty.** My earlier build had a System message reading "Write in plain text without markdown formatting." Once I switched to a markdown display (Step 7), that message fought the branch prompts: they asked for markdown, it forbade markdown, and the model produced malformed output with no verdict heading to style. Deleting message from this node fixed everything. 
 
-On the **Ollama Chat Model** node, add these options:
+**<u>Ollama Chat Model</u>**:
 
 - **Sampling Temperature**: `0` *(Same input gives the same output)*
 - **Enable Thinking**: *off*.  *(`qwen3.6` reasons before answering, which a rubric does not need, and it runs faster off)*
@@ -274,14 +274,14 @@ On the **Ollama Chat Model** node, add these options:
 
 A raw text dump is hard to read; an analyst wants red or green at a glance. Three nodes turn the model's markdown into a coloured banner.
 
-**Markdown node** (after Basic LLM Chain)
+**<u>Markdown node</u>** (after Basic LLM Chain)
 
-- **Mode**: *Markdown to HTML*
+- **Mode**: `Markdown to HTML`
 - **Markdown**: {% raw %}`{{ $json.text }}`{% endraw %}
 - **Destination Key**: `data`
 <br>
 
-**Style Verdict** — a Code node that tags the verdict heading with a CSS class. n8n's Markdown converter adds an `id` to headings, so this matches with a regex that tolerates attributes.
+**<u>Style Verdict</u>** — a Code node that tags the verdict heading with a CSS class. n8n's Markdown converter adds an `id` to headings, so this matches with a regex that tolerates attributes.
 
 ```javascript
 let html = $input.first().json.data;
@@ -293,7 +293,11 @@ return { json: { data: html } };
 
 > My first version matched a bare `<h2>` and silently did nothing, leaving a white-on-white invisible banner. Match the attributes.
 
-**Form Ending node** — set Operation to **Show Text**, and paste this in the Text field (expression mode). The CSS colours the banner, with a grey fallback if the class ever fails to attach.
+**<u>Complete Form (n8n Form)</u>** 
+
+- **Page Type**: `Form Ending`
+- **On n8n Form Submission**: `Show Text`
+- **Text field** (expression mode): *paste the HTML block provided below*
 
 {% raw %}
 ```html
