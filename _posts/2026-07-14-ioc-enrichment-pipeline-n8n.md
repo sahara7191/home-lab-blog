@@ -35,7 +35,7 @@ Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blo
 
 ## Prerequisites
 
-- A self-hosted n8n instance and Ollama with a capable model. I use `qwen3.6:35b`.
+- A self-hosted n8n instance and Ollama with a capable model. I use `sylink:8b` *(enterprise cybersecurity AI for threat intelligence, incident response, and security operations)*.
 
 - API keys from sources:
 
@@ -146,18 +146,25 @@ const summary = {
   shodanOrg: shodan.org || 'unknown'
 };
 
-summary.prompt = `You are a SOC analyst reviewing threat intelligence for an IP address. Respond in EXACTLY this format, nothing else:
+// Decide the verdict in code — the model must not override it
+let verdict = 'CLEAN';
+if (summary.abuseConfidenceScore >= 75 || summary.vtMalicious >= 5) {
+  verdict = 'MALICIOUS';
+} else if (summary.abuseConfidenceScore >= 25 || summary.vtMalicious >= 2) {
+  verdict = 'SUSPICIOUS';
+}
+summary.verdict = verdict;
 
-## Verdict: CLEAN
+summary.prompt = `You are a SOC analyst. The verdict has already been determined: ${verdict}. Do not change it. Write a report in EXACTLY this format:
+
+## Verdict: ${verdict}
 - fact one
 - fact two
 - fact three
 
 **Recommendation:** One short sentence.
 
-Rules: line 1 must be exactly "## Verdict: MALICIOUS" or "## Verdict: SUSPICIOUS" or "## Verdict: CLEAN". Use 4 to 6 bullets, each one fact under 15 words. No paragraphs, no introduction, no extra text after the recommendation.
-
-Verdict criteria: MALICIOUS if AbuseIPDB confidence is 75 or higher, OR VirusTotal malicious count is 10 or higher. SUSPICIOUS if AbuseIPDB confidence is 25-74, OR VirusTotal malicious count is 3-9. CLEAN otherwise.
+Rules: line 1 must be exactly "## Verdict: ${verdict}". Use 4 to 6 bullets, each one fact under 15 words. The bullets must justify the ${verdict} verdict using the data below. No paragraphs, no introduction, no text after the recommendation.
 
 Threat intelligence data:
 IOC (IP address): ${summary.ioc}
@@ -214,18 +221,34 @@ const summary = {
   names: (vt.names || []).slice(0, 5).join(', ') || 'unknown'
 };
 
-summary.prompt = `You are a SOC analyst reviewing threat intelligence for a file hash. Respond in EXACTLY this format, nothing else:
+// Decide the verdict in code — the model must not override it
+let verdict = 'CLEAN';
+if (summary.vtMalicious >= 5) {
+  verdict = 'MALICIOUS';
+} else if (summary.vtMalicious >= 2) {
+  verdict = 'SUSPICIOUS';
+}
+// Known AV test files (EICAR) are always CLEAN regardless of detections
+const lowerLabel = (summary.threatLabel || '').toLowerCase();
+const lowerTags = (summary.tags || '').toLowerCase();
+const lowerNames = (summary.names || '').toLowerCase();
+const isTestFile = lowerLabel.includes('eicar') || lowerTags.includes('eicar') || lowerNames.includes('eicar');
+if (isTestFile) {
+  verdict = 'CLEAN';
+}
+summary.verdict = verdict;
+summary.isTestFile = isTestFile;
 
-## Verdict: CLEAN
+summary.prompt = `You are a SOC analyst. The verdict has already been determined: ${verdict}. Do not change it. Write a report in EXACTLY this format:
+
+## Verdict: ${verdict}
 - fact one
 - fact two
 - fact three
 
 **Recommendation:** One short sentence.
 
-Rules: line 1 must be exactly "## Verdict: MALICIOUS" or "## Verdict: SUSPICIOUS" or "## Verdict: CLEAN". Use 4 to 7 bullets, each one fact under 15 words. Prioritize: malware family or threat label, detection count, threat categories, notable tags, first seen date, file identity. No paragraphs, no introduction, no extra text after the recommendation.
-
-Verdict criteria: MALICIOUS if VirusTotal malicious count is 10 or higher. SUSPICIOUS if 3-9. CLEAN if 0-2. Exception: known antivirus test files (such as EICAR) are CLEAN regardless of detection count, with a bullet noting it is a test file.
+Rules: line 1 must be exactly "## Verdict: ${verdict}". Use 4 to 7 bullets, each one fact under 15 words. The bullets must justify the ${verdict} verdict using the data below. Prioritize: malware family or threat label, detection count, threat categories, notable tags, first seen date, file identity.${isTestFile ? ' Include a bullet noting this is a known antivirus test file.' : ''} No paragraphs, no introduction, no text after the recommendation.
 
 Threat intelligence data:
 IOC (file hash): ${summary.ioc}
@@ -249,7 +272,7 @@ return [{ json: summary }];
 
 ## Step 6: The Local LLM Verdict
 
-Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP merge` and `Hash Summary` to its input, and connect an **Ollama Chat Model** to its Model input (`qwen3.6:35b`).
+Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP merge` and `Hash Summary` to its input, and connect an **Ollama Chat Model** to its Model input (`sylink:8b`).
 
 **<u>Basic LLM Chain</u>**:
 
