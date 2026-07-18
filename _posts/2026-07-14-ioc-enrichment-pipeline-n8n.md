@@ -353,14 +353,17 @@ Four cases, each probing a different behavior *(see screenshots below)*.
 `8.8.8.8`
 - Verdict: 🟢 CLEAN
 - Proof: Weights the 0/100 abuse score and Google ownership past 120 stale reports
+<br>
 
 `92.141.179.85`
 - Verdict: 🟠 SUSPICIOUS
 - Proof: Lands in the middle band (VT 1–4 or AbuseIPDB 25–74)
+<br>
 
 `db349b97c37d22f5ea1d1841e3c89eb4` (WannaCry)
 - Verdict: 🔴 MALICIOUS
 - Proof: High detection count and a clear malware-family label drive an unambiguous verdict
+<br>
 
 `44d88612fea8a8f36de82e1278abb02f` (EICAR)
 - Verdict: 🟢 CLEAN
@@ -379,7 +382,8 @@ Four cases, each probing a different behavior *(see screenshots below)*.
 <br>
 
 > The EICAR case is the one that convinced me this was worth building: the criteria carve out known test files while VirusTotal's malicious score is 66, so the tool understands why it is flagged rather than pattern-matching on a number.
-> Do not trust the banner alone during testing! After every test (I ran much more than I provided here), I checked the VT node's outputs and confirmed the malicious count matches on the VirusTotal website. 
+
+> Do not trust the banner alone during testing! After every test *(I ran much more than I provided here)*, I checked the VT node's outputs and confirmed the malicious count matches on the VirusTotal website. 
 
 <br>
 
