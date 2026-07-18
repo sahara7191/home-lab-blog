@@ -348,21 +348,22 @@ Final chain: **<u>Basic LLM Chain → Markdown → Style Verdict → Form Ending
 
 Four cases, each probing a different behavior *(see screenshots below)*.
 
+
 | Test IOC | Verdict | What it proves |
-| --- | --- | --- |
+| -------- | ------- | -------------- |
 | `8.8.8.8` | Green CLEAN | Weights the 0/100 abuse score and Google ownership past 120 stale reports |
 | `92.141.179.85` | Amber SUSPICIOUS | Lands in the middle band (VT 1-4 or AbuseIPDB 25-74) |
 | `db349b97c37d22f5ea1d1841e3c89eb4` (WannaCry) | Red MALICIOUS | High detection count and a clear malware-family label drive an unambiguous verdict |
 | `44d88612fea8a8f36de82e1278abb02f` (EICAR) | Green CLEAN | Recognized the AV test file despite dozens of detections |
 <br>
 
-!Test for Google IP({{ "/assets/images/test-googleIP.png" | relative_url }})
+![Test for Google IP]({{ "/assets/images/test-googleIP.png" | relative_url }})
 
-!Test for suspicious IP({{ "/assets/images/test-suspiciousIP.png" | relative_url }})
+![Test for suspicious IP]({{ "/assets/images/test-suspiciousIP.png" | relative_url }})
 
-!Test for WannaCry hash({{ "/assets/images/test-wannahash.png" | relative_url }})
+![Test for WannaCry hash]({{ "/assets/images/test-wannahash.png" | relative_url }})
 
-!Test for EICAR hash({{ "/assets/test-eicarhash.png" | relative_url }})
+![Test for EICAR hash]({{ "/assets/test-eicarhash.png" | relative_url }})
 
 
 > The EICAR case is the one that convinced me this was worth building: the criteria carve out known test files while VirusTotal's malicious score is 66, so the tool understands why it is flagged rather than pattern-matching on a number.
