@@ -344,6 +344,8 @@ return { json: { data: html } };
 
 Final chain: **<u>Basic LLM Chain → Markdown → Style Verdict → Form Ending.</u>** Submit an indicator and the styled verdict renders in the browser: green for clean, amber for suspicious, red for malicious.
 
+<br>
+
 ## Testing
 
 Four cases, each probing a different behavior *(see screenshots below)*.
@@ -363,6 +365,7 @@ Four cases, each probing a different behavior *(see screenshots below)*.
 `44d88612fea8a8f36de82e1278abb02f` (EICAR)
 - Verdict: 🟢 Green CLEAN
 - Proof: Recognized the AV test file despite dozens of detections.
+
 <br>
 
 ![Test for Google IP]({{ "/assets/images/test-googleIP.png" | relative_url }})
@@ -371,23 +374,14 @@ Four cases, each probing a different behavior *(see screenshots below)*.
 
 ![Test for WannaCry hash]({{ "/assets/images/test-wannahash.png" | relative_url }})
 
-![Test for EICAR hash]({{ "/assets/test-eicarhash.png" | relative_url }})
+![Test for EICAR hash]({{ "/assets/images/test-eicarhash.png" | relative_url }})
 
 <br>
 
 > The EICAR case is the one that convinced me this was worth building: the criteria carve out known test files while VirusTotal's malicious score is 66, so the tool understands why it is flagged rather than pattern-matching on a number.
 > I do not trust the banner alone during testing. After every test (I ran much more than I provided here), I checked the VT node's outputs and confirmed the malicious count matches on the VirusTotal website. 
 
-## Problems I Ran Into
-
-| Symptom | Cause | Fix |
-| --- | --- | --- |
-| Banner never colours, output subtly wrong | Leftover "plain text" System message fighting the markdown prompt | Delete the System message |
-| Empty or stunted verdict | Token cap counting hidden thinking tokens | Leave cap at -1, or disable thinking |
-| Same IOC, different verdicts | Non-deterministic sampling | Temperature 0 + explicit rubric |
-| "Referenced node doesn't exist" | Stale node name in a Code node (`$('If')`, wrong VT name) | Match exact canvas names |
-| Code node errors on `.attributes` | Rate-limited API returned an error object, no `data` field | Wait out the 4/min limit |
-| Invisible white-on-white heading | Style regex matched bare `<h2>`, missed the `id` attribute | Match with attributes |
+<br>
 
 ## Conclusion
 
