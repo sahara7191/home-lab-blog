@@ -33,6 +33,10 @@ Runs on the Fedora AI workstation from my previous posts: [Part 1](/home-lab-blo
 ![IOC Workflow]({{ "/assets/images/IOC-Workflow.png" | relative_url }})
 <br>
 
+> **A note on node choice:** n8n offers two ways to use an LLM here, a Basic LLM Chain and an AI Agent. An AI Agent can decide its own steps and call tools in a loop, which is powerful for open-ended tasks. But for a security verdict I want the opposite of open-ended: the same indicator should produce the same result every time. So this pipeline uses the Basic LLM Chain, which just takes a prompt and returns an answer. My own nodes gather the data and decide the verdict; the model only writes it up. Determinism over autonomy.
+
+<br>
+
 ## Prerequisites
 
 - A self-hosted n8n instance and Ollama with a capable model. I use `sylink:8b` *(enterprise cybersecurity AI for threat intelligence, incident response, and security operations)*.
