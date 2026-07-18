@@ -390,9 +390,12 @@ Four cases, each probing a different behavior *(see screenshots below)*.
 ## Conclusion
 
 Early versions of this project asked the model to judge the indicator, and it flip-flopped: the same IP came back CLEAN one run and MALICIOUS the next, once even ignoring 17 VirusTotal detections. Moving the verdict into the Code nodes fixed that. Plain "if" statements apply the thresholds I chose, and the model only explains the evidence behind a decision already made. Deterministic logic decides, the model narrates.
-Those thresholds are my policy, not universal truth, and they live in one place where anyone can read and tune them. That is the real lesson: a good automated verdict is not the model being clever; it is an explicit rule applied the same way every time, with the reasoning written in plain language on top. The lesson in this lab was figuring out who should make the call: the model or the code. AI is just a good assistant, not a replacement. 
+
+Those thresholds are my policy, not universal truth, and an analyst can analyze and tune them. That is the real lesson: a good automated verdict is not the model being clever; it is an explicit rule applied the same way every time, with the reasoning written in plain language on top. The lesson in this lab was figuring out who should make the call: the model or the code. AI is just a good assistant, not a replacement. 
 
 This is my first automation attempt, and I know it looks very simple. I'm very excited to learn something new and have hands-on practice.
+
+<br>
 
 ## What's Next
 
@@ -415,5 +418,3 @@ Atomic Red Team fires an ATT&CK technique
         |
    Enriched verdict lands in my notifications
 ​```
-
-Simulate, detect, enrich, respond. No indicator typed by hand anywhere in the chain.
