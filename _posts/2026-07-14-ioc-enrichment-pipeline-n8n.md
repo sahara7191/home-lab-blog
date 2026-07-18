@@ -272,7 +272,7 @@ return [{ json: summary }];
 
 ## Step 6: The Local LLM Verdict
 
-Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP merge` and `Hash Summary` to its input, and connect an **Ollama Chat Model** to its Model input (`sylink:8b`).
+Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP merge` and `Hash Summary` to its input, and connect an **Ollama Chat Model** (mine is `sylink:8b`) to its Model input.
 
 **<u>Basic LLM Chain</u>**:
 
@@ -285,7 +285,7 @@ Both branches converge here. Add a **Basic LLM Chain** node, connect both `IP me
 **<u>Ollama Chat Model</u>**:
 
 - **Sampling Temperature**: `0` *(Same input gives the same output)*
-- **Enable Thinking**: *off*.  *(`qwen3.6` reasons before answering, which a rubric does not need, and it runs faster off)*
+- **Enable Thinking**: *off*.  *(some models reason before answering, which a rubric does not need, and it runs faster off)*
 
 > **Do not cap "Max Tokens to Generate" on a thinking model.** The cap counts hidden reasoning tokens too, so a limit of 400 gets eaten by the thinking phase and leaves a gutted verdict with no explanation. Leave it at -1, or turn thinking off first. Temperature 0 plus the strict format keeps length under control anyway.
 
@@ -340,20 +340,33 @@ return { json: { data: html } };
 </div>
 ```
 {% endraw %}
+<br>
 
-Final chain: **Basic LLM Chain → Markdown → Style Verdict → Form Ending.** Submit an indicator and the styled verdict renders in the browser: green for clean, amber for suspicious, red for malicious.
+Final chain: **<u>Basic LLM Chain → Markdown → Style Verdict → Form Ending.</u>** Submit an indicator and the styled verdict renders in the browser: green for clean, amber for suspicious, red for malicious.
 
 ## Testing
 
-Three cases, each probing a different behavior. Space tests a minute apart to respect VirusTotal's 4/min limit.
+Four cases, each probing a different behavior *(see screenshots below)*.
 
-| Test IOC | Expected | What it proves |
+| Test IOC | Verdict | What it proves |
 | --- | --- | --- |
-| `8.8.8.8` | Green CLEAN | Reasons past 120 abuse reports, weights the 0/100 score and Google ownership |
-| `45.155.205.233` | Red MALICIOUS | Rubric resolves conflicting sources (VT detections vs low AbuseIPDB score) the same way every run |
-| `44d88612fea8a8f36de82e1278abb02f` (EICAR) | Green CLEAN | Recognizes the AV test file despite dozens of detections, recommends hygiene not IR |
+| `8.8.8.8` | Green CLEAN | Weights the 0/100 abuse score and Google ownership past 120 stale reports |
+| `92.141.179.85` | Amber SUSPICIOUS | Lands in the middle band (VT 1-4 or AbuseIPDB 25-74) |
+| `db349b97c37d22f5ea1d1841e3c89eb4` (WannaCry) | Red MALICIOUS | High detection count and a clear malware-family label drive an unambiguous verdict |
+| `44d88612fea8a8f36de82e1278abb02f` (EICAR) | Green CLEAN | Recognized the AV test file despite dozens of detections |
+<br>
 
-The EICAR case is the one that convinced me this was worth building: the criteria carve out known test files, so the tool understands *why* it is flagged rather than pattern-matching on a number.
+!Test for Google IP({{ "/assets/images/test-googleIP.png" | relative_url }})
+
+!Test for suspicious IP({{ "/assets/images/test-suspiciousIP.png" | relative_url }})
+
+!Test for WannaCry hash({{ "/assets/images/test-wannahash.png" | relative_url }})
+
+!Test for EICAR hash({{ "/assets/test-eicarhash.png" | relative_url }})
+
+
+> The EICAR case is the one that convinced me this was worth building: the criteria carve out known test files while VirusTotal's malicious score is 66, so the tool understands why it is flagged rather than pattern-matching on a number.
+> I do not trust the banner alone during testing. After every test (I ran much more than I provided here), I checked the VT node's outputs and confirmed the malicious count matches on the VirusTotal website. 
 
 ## Problems I Ran Into
 
