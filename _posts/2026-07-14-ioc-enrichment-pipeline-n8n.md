@@ -389,21 +389,18 @@ Four cases, each probing a different behavior *(see screenshots below)*.
 
 ## Conclusion
 
-This is not a forensics tool. It does not carve disks or parse memory. It automates the *glue* around forensics: enrichment, correlation, documentation, where a lot of investigation time actually goes.
+Early versions of this project asked the model to judge the indicator, and it flip-flopped: the same IP came back CLEAN one run and MALICIOUS the next, once even ignoring 17 VirusTotal detections. Moving the verdict into the Code nodes fixed that. Plain "if" statements apply the thresholds I chose, and the model only explains the evidence behind a decision already made. Deterministic logic decides, the model narrates.
+Those thresholds are my policy, not universal truth, and they live in one place where anyone can read and tune them. That is the real lesson: a good automated verdict is not the model being clever; it is an explicit rule applied the same way every time, with the reasoning written in plain language on top. The lesson in this lab was figuring out who should make the call: the model or the code. AI is just a good assistant, not a replacement. 
 
-Functionally it is a small SOAR platform. Ingest an indicator, enrich from multiple sources, correlate, produce a verdict, that is what Splunk SOAR and Cortex XSOAR do at enterprise scale. Building it by hand is a good way to understand what those platforms do under the hood.
-
-> **One honest limitation.** The rubric lives inside the prompt, so the model still does the final classification. That is fine for a portfolio tool. The more robust design computes the verdict in the Code node with plain `if` statements and lets the LLM only *explain* the evidence: deterministic logic decides, the model narrates. That is the direction for anything near production.
-
-And because the verdict step runs on a local model, no indicator data ever leaves the machine.
+This is my first automation attempt, and I know it looks very simple. I'm very excited to learn something new and have hands-on practice.
 
 ## What's Next
 
 This pipeline is Part 1 of a series. The roadmap:
 
-**Part 2: URL and domain branches.** Two new indicator types on the same pattern: a new Switch rule, new HTTP requests, a new merge node, and the same LLM chain. Domains get VirusTotal's domain lookup plus registration age (a domain registered last week is a signal on its own). URLs bring a nice API quirk: VirusTotal requires the URL base64-encoded into a lookup ID, so that branch needs a small Code node before the HTTP request. Both branches also gain new free intel sources, urlscan.io for page behavior and AlienVault OTX for community threat intel.
+**Part 2: URL and domain branches.** Two new indicator types on the same pattern: a new Switch rule, new HTTP requests, a new merge node, and the same LLM chain. 
 
-**Part 3: Phishing email triage.** The bigger jump: upload an `.eml` file instead of typing an indicator, parse out the sender IP, embedded links, and attachment hashes, then feed each extracted IOC through the existing branches. That turns the pipeline from a lookup tool into a triage tool, and forces solving multi-IOC handling against VirusTotal's 4 requests/minute limit (Loop Over Items with waits).
+**Part 3: Phishing email triage.** The bigger jump: upload an `.eml` file instead of typing an indicator, parse out the sender IP, embedded links, and attachment hashes, then feed each extracted IOC through the existing branches. 
 
 **The finale: a purple-team loop.** I have an Ubuntu VM running Atomic Red Team and a Wazuh deployment in the lab:
 
